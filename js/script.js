@@ -4,11 +4,8 @@ const previewLogo = document.getElementById('previewLogo');
 
 // Update preview
 function updatePreview() {
-  document.getElementById('letterHead').value
-    ? document.getElementById('previewLogo').style.display = 'none'
-    : document.getElementById('previewLogo').style.display = 'block';
-  document.getElementById('previewLogo').alt =
-    document.getElementById('letterHead').value || "Logo Perusahaan";
+  document.getElementById('letterHead').textContent =
+    document.getElementById('letterHead').value || "Kepala Surat";
   document.getElementById('previewNumber').textContent =
     document.getElementById('letterNumber').value || "No: -";
   document.getElementById('previewDate').textContent =
