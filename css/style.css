@@ -1,122 +1,75 @@
+/* ===== GLOBAL STYLE ===== */
 body {
-  font-family: "Times New Roman", serif;
-  background: #f4f4f4;
-  margin: 0;
-  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f2f2f2;
 }
 
 .container {
-  max-width: 900px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 6px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  display: flex;
+  gap: 20px;
 }
 
-h1, h2, h3 {
-  font-family: Arial, sans-serif;
+/* ===== FORM ===== */
+form {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form h3 {
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
-form {
-  margin-bottom: 30px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 5px;
-}
-
-input, textarea, button {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-family: inherit;
-  font-size: 14px;
-}
-
-button {
-  width: auto;
-  cursor: pointer;
-  background: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 4px;
-  font-size: 14px;
-  margin-right: 8px;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-/* ===== PREVIEW KERTAS ===== */
-.paper {
+/* ===== PREVIEW AREA ===== */
+.preview {
+  flex: 2;
   background: #fff;
-  border: 1px solid #ddd;
-  padding: 40px 60px;
-  margin-top: 15px;
-  min-height: 842px; /* kira-kira A4 */
-  width: 595px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.paper-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+.paper {
+  width: 210mm;
+  min-height: 297mm;
+  background: #fff;
+  padding: 20mm;
+  margin: auto;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.paper h1, .paper h2, .paper h3, .paper p {
+  margin: 0 0 10px;
+}
+
+/* ===== HEADER SURAT ===== */
+#previewLogo {
+  max-height: 80px;
+  display: block;
   margin-bottom: 20px;
 }
 
-.paper-header img {
-  max-height: 80px;
-}
-
-#previewHead {
-  font-size: 14px;
-  white-space: pre-line;
-}
-
-.paper-meta {
-  text-align: right;
-  margin-bottom: 30px;
-  font-size: 14px;
-}
-
-#previewTitle {
-  text-align: center;
-  margin-bottom: 30px;
-  text-decoration: underline;
-  font-size: 16px;
-}
-
-#previewBody {
-  font-size: 14px;
-  line-height: 1.6;
-  white-space: pre-line;
-}
-
-/* ===== BLOK TANDA TANGAN 3 KOLOM ===== */
+/* ===== BLOK TANDA TANGAN VERTIKAL ===== */
 .signature-block {
   margin-top: 60px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* tanda tangan bertumpuk ke bawah */
+  align-items: flex-end;  /* rata kanan */
+  gap: 60px;              /* jarak antar blok tanda tangan */
   text-align: center;
 }
 
 .sig-col {
-  flex: 1;
-  padding: 0 10px;
+  width: 250px;           /* lebar tiap blok tanda tangan */
 }
 
 .sig-space {
-  height: 100px;
+  height: 100px;          /* ruang untuk tanda tangan */
   margin-bottom: 10px;
 }
 
