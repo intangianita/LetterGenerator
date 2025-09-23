@@ -4,146 +4,108 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perancang Surat</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>Perancang Surat</h1>
-
     <!-- Form Input -->
-    <form id="letterForm">
-      <label>Logo Surat</label>
-      <input type="file" id="letterLogo" accept="image/*">
+    <div class="form-panel">
+      <h2>Perancang Surat</h2>
+      <form id="letterForm">
+        <label>Logo Surat</label>
+        <input type="file" id="letterLogo" accept="image/*">
 
-      <label>Kop Surat</label>
-      <textarea id="letterHead" rows="2"></textarea>
+        <label>Kepala Surat</label>
+        <textarea id="letterHead" rows="2"></textarea>
 
-      <label>Nomor Surat</label>
-      <input type="text" id="letterNumber" placeholder="0001">
+        <label>Nomor Surat</label>
+        <input type="text" id="letterNumber" placeholder="0001">
 
-      <label>Tanggal Surat</label>
-      <input type="date" id="letterDate">
+        <label>Tanggal</label>
+        <input type="date" id="letterDate">
 
-      <label>Judul Surat</label>
-      <input type="text" id="letterTitle" placeholder="Judul Surat">
+        <label>Judul</label>
+        <input type="text" id="letterTitle" placeholder="Judul Surat">
 
-      <label>Detail Surat Kedua</label>
-      <textarea id="letterDetail2" rows="2"></textarea>
+        <label>Isi Surat</label>
+        <textarea id="letterBody" rows="6"></textarea>
 
-      <h3>Isi Barang</h3>
-      <table id="inputTable">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama Barang</th>
-            <th>Satuan</th>
-            <th>Jumlah (Angka)</th>
-            <th>Jumlah (Huruf)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td><input type="text" class="itemName"></td>
-            <td><input type="text" class="itemUnit"></td>
-            <td><input type="number" class="itemQty"></td>
-            <td><input type="text" class="itemQtyText"></td>
-          </tr>
-        </tbody>
-      </table>
-      <button type="button" id="addRow">Tambah Baris</button>
+        <h3>Blok Tanda Tangan</h3>
+        <label>Yang Menerima - Nama</label>
+        <input type="text" id="sigName1" placeholder="Nama Yang Menerima">
+        <input type="file" id="sigFile1" accept="image/*">
 
-      <label>Detail Surat Ketiga</label>
-      <textarea id="letterDetail3" rows="2"></textarea>
+        <label>Security - Nama</label>
+        <input type="text" id="sigName2" placeholder="Nama Security">
+        <input type="file" id="sigFile2" accept="image/*">
 
-      <h3>Blok Tanda Tangan</h3>
-      <div class="sig-inputs">
-        <div>
-          <label>Yang Menerima - Nama</label>
-          <input type="text" id="sigInputName1" placeholder="Nama Yang Menerima">
-          <input type="file" id="sigInputFile1" accept="image/*">
+        <label>Kepala Gudang - Nama</label>
+        <input type="text" id="sigName3" placeholder="Nama Kepala Gudang">
+        <input type="file" id="sigFile3" accept="image/*">
+
+        <button type="button" id="downloadPDF">Unduh PDF</button>
+      </form>
+    </div>
+
+    <!-- Preview -->
+    <div class="preview-panel">
+      <h2>Pratinjau</h2>
+      <div id="paperPreview" class="paper">
+        <!-- Header surat -->
+        <div class="paper-header">
+          <div class="logo"><img id="previewLogo" style="display:none;"></div>
+          <div class="kop" id="previewHead">Kepala Surat</div>
+          <div class="detail">
+            <div id="previewNumber">No: -</div>
+            <div id="previewDate">-</div>
+          </div>
         </div>
-        <div>
-          <label>Security - Nama</label>
-          <input type="text" id="sigInputName2" placeholder="Nama Security">
-          <input type="file" id="sigInputFile2" accept="image/*">
-        </div>
-        <div>
-          <label>Kepala Gudang - Nama</label>
-          <input type="text" id="sigInputName3" placeholder="Nama Kepala Gudang">
-          <input type="file" id="sigInputFile3" accept="image/*">
-        </div>
-      </div>
 
-      <button type="button" id="downloadPDF">Download PDF</button>
-    </form>
+        <!-- Judul dan isi -->
+        <h2 id="previewTitle">Judul Surat</h2>
+        <div id="previewBody">Isi surat akan tampil di sini.</div>
 
-    <!-- Preview Surat -->
-    <h2>Preview</h2>
-    <div id="paperPreview" class="paper">
-      <!-- Header -->
-      <div class="paper-header">
-        <div class="header-left">
-          <img id="previewLogo" style="max-height:80px; display:none;" />
-        </div>
-        <div class="header-center">
-          <div id="previewHead">Kop Surat</div>
-        </div>
-        <div class="header-right">
-          <div id="previewNumber">No: -</div>
-          <div id="previewDate">Tanggal: -</div>
-        </div>
-      </div>
+        <!-- Tabel barang -->
+        <table class="table-barang">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Barang</th>
+              <th>Satuan</th>
+              <th>Jumlah (Angka)</th>
+              <th>Jumlah (Huruf)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>2</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>3</td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
 
-      <!-- Judul -->
-      <h2 id="previewTitle" class="title">Judul Surat</h2>
-
-      <!-- Detail kedua -->
-      <div id="previewDetail2" class="detail2">Detail surat kedua</div>
-
-      <!-- Isi tabel -->
-      <table class="items-table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama Barang</th>
-            <th>Satuan</th>
-            <th>Jumlah (Angka)</th>
-            <th>Jumlah (Huruf)</th>
-          </tr>
-        </thead>
-        <tbody id="previewTableBody"></tbody>
-      </table>
-
-      <!-- Tanggal surat -->
-      <div class="letter-date">Tanggal: <span id="dateBottom">-</span></div>
-
-      <!-- Blok tanda tangan -->
-      <div id="signatureBlock" class="signature-block">
-        <div class="sig-col">
-          <div class="sig-space"><img id="sigImg1" style="max-height:80px; display:none;" /></div>
-          <p id="sigName1"><b>Nama Yang Menerima</b></p>
-          <p>Yang Menerima</p>
-        </div>
-        <div class="sig-col">
-          <div class="sig-space"><img id="sigImg2" style="max-height:80px; display:none;" /></div>
-          <p id="sigName2"><b>Nama Security</b></p>
-          <p>Security</p>
-        </div>
-        <div class="sig-col">
-          <div class="sig-space"><img id="sigImg3" style="max-height:80px; display:none;" /></div>
-          <p id="sigName3"><b>Nama Kepala Gudang</b></p>
-          <p>Kepala Gudang</p>
+        <!-- Blok tanda tangan -->
+        <div class="signature-block">
+          <div class="sig-col">
+            <div>Yang Menerima</div>
+            <div class="sig-space"><img id="sigImg1" style="display:none;"></div>
+            <div id="sigPreviewName1">Nama Yang Menerima</div>
+          </div>
+          <div class="sig-col">
+            <div>Security</div>
+            <div class="sig-space"><img id="sigImg2" style="display:none;"></div>
+            <div id="sigPreviewName2">Nama Security</div>
+          </div>
+          <div class="sig-col">
+            <div>Kepala Gudang</div>
+            <div class="sig-space"><img id="sigImg3" style="display:none;"></div>
+            <div id="sigPreviewName3">Nama Kepala Gudang</div>
+          </div>
         </div>
       </div>
-
-      <!-- Detail ketiga -->
-      <div id="previewDetail3" class="detail3">Detail surat ketiga</div>
     </div>
   </div>
-
-  <script src="js/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
