@@ -3,59 +3,1115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perancang Surat</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Perancang Surat Digital</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 25px 0;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .logo i {
+      font-size: 2.5rem;
+      color: #667eea;
+    }
+
+    .logo h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #2d3748;
+    }
+
+    .header-subtitle p {
+      color: #718096;
+      font-size: 1.1rem;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .form-section, .preview-section {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-header i {
+      font-size: 1.5rem;
+      color: #667eea;
+    }
+
+    .section-header h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    /* Form Styling */
+    .form-group-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: 12px;
+      border-left: 4px solid #667eea;
+    }
+
+    .form-group-section h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+      color: #2d3748;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .form-group-section h3 i {
+      color: #667eea;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .form-group label i {
+      color: #667eea;
+      width: 16px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-preview {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* Preview Styling */
+    .preview-wrapper {
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 20px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .preview-content {
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      font-family: 'Times New Roman', serif;
+      line-height: 1.6;
+      min-height: 550px;
+    }
+
+    /* Letter Header */
+    .letter-header {
+      margin-bottom: 30px;
+    }
+
+    .header-top {
+      display: grid;
+      grid-template-columns: 120px 1fr 200px;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+
+    .logo-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-section img {
+      max-width: 100px;
+      max-height: 80px;
+      object-fit: contain;
+    }
+
+    .company-info {
+      text-align: center;
+    }
+
+    .company-info h1 {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+
+    .company-info p {
+      color: #4a5568;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .color-legend {
+      font-size: 0.85rem;
+      color: #4a5568;
+    }
+
+    .color-legend div {
+      margin-bottom: 4px;
+    }
+
+    .header-line {
+      border: none;
+      height: 3px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin-bottom: 20px;
+    }
+
+    /* Letter Title */
+    .letter-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .letter-title h2 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-decoration: underline;
+      color: #2d3748;
+    }
+
+    /* Letter Details */
+    .letter-details {
+      margin-bottom: 25px;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 200px 20px 1fr;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .detail-separator {
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .detail-value {
+      color: #4a5568;
+    }
+
+    /* Letter Body */
+    .letter-body {
+      margin-bottom: 40px;
+    }
+
+    .letter-content {
+      text-align: justify;
+      color: #2d3748;
+      line-height: 1.8;
+    }
+
+    /* Signature Section */
+    .signature-section {
+      margin-top: 50px;
+    }
+
+    .signature-date {
+      text-align: right;
+      margin-bottom: 30px;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .signature-block {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .signature-item {
+      text-align: center;
+      flex: 1;
+    }
+
+    .signature-title {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 15px;
+    }
+
+    .signature-space {
+      height: 60px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .signature-img {
+      max-width: 100px;
+      max-height: 50px;
+      object-fit: contain;
+    }
+
+    .signature-name {
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    /* Upload styling */
+    input[type="file"] {
+      padding: 8px 12px !important;
+      border: 2px dashed #e2e8f0 !important;
+      background: #f8fafc;
+      cursor: pointer;
+    }
+
+    input[type="file"]:hover {
+      border-color: #667eea !important;
+      background: #edf2f7;
+    }
+
+    .upload-preview {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .loading-content {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .loading-content i {
+      font-size: 2rem;
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+
+    .loading-content p {
+      font-size: 1.1rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .signature-block {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .header-top {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 15px;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        padding: 0 15px;
+      }
+      
+      .logo {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .logo h1 {
+        font-size: 1.8rem;
+      }
+      
+      .container {
+        padding: 0 15px;
+      }
+      
+      .form-section, .preview-section {
+        padding: 20px;
+      }
+
+      .detail-row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+
+      .detail-separator {
+        display: none;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-section, .preview-section {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    /* Scrollbar Styling */
+    .preview-wrapper::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .preview-wrapper::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .preview-wrapper::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 4px;
+    }
+
+    .preview-wrapper::-webkit-scrollbar-thumb:hover {
+      background: #5a67d8;
+    }
+  </style>
 </head>
 <body>
-
-  <h2>Perancang Surat</h2>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <i class="fas fa-file-alt"></i>
+        <h1>Perancang Surat Digital</h1>
+      </div>
+      <div class="header-subtitle">
+        <p>Buat surat resmi dengan mudah dan profesional</p>
+      </div>
+    </div>
+  </header>
 
   <div class="container">
-    <!-- FORM -->
+    <!-- FORM SECTION -->
     <div class="form-section">
-      <label>Nomor Surat: <input type="text" id="nomorSurat"></label><br>
-      <label>Tanggal Surat: <input type="date" id="tanggalSurat"></label><br>
-      <label>Judul Surat: <input type="text" id="judulSurat"></label><br>
-      <label>Detail Surat: <textarea id="detailSurat"></textarea></label><br>
+      <div class="section-header">
+        <i class="fas fa-edit"></i>
+        <h2>Form Data Surat</h2>
+      </div>
 
-      <h3>Blok Tanda Tangan</h3>
-      <label>Yang Menerima: <input type="text" id="namaMenerima"></label><br>
-      <label>Security: <input type="text" id="namaSecurity"></label><br>
-      <label>Kepala Gudang: <input type="text" id="namaGudang"></label><br>
+      <form class="letter-form" id="letterForm">
+        <!-- Logo Perusahaan -->
+        <div class="form-group-section">
+          <h3><i class="fas fa-building"></i> Logo Perusahaan</h3>
+          
+          <div class="form-group">
+            <label for="logoPerusahaan">
+              <i class="fas fa-image"></i>
+              Upload Logo
+            </label>
+            <input type="file" id="logoPerusahaan" accept="image/*" onchange="handleLogoUpload(event)">
+            <div class="upload-preview" id="logoPreview" style="display: none;">
+              <img id="logoImg" style="max-width: 150px; max-height: 80px; border-radius: 8px; margin-top: 10px;">
+              <button type="button" onclick="removeLogo()" style="margin-left: 10px; padding: 5px 10px; background: #f56565; color: white; border: none; border-radius: 5px; cursor: pointer;">Hapus</button>
+            </div>
+          </div>
+        </div>
 
-      <button onclick="updatePreview()">Preview</button>
-      <button onclick="downloadPDF()">Download PDF</button>
+        <!-- Informasi Dasar -->
+        <div class="form-group-section">
+          <h3><i class="fas fa-info-circle"></i> Informasi Dasar</h3>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nomorSurat">
+                <i class="fas fa-hashtag"></i>
+                Nomor Surat
+              </label>
+              <input type="text" id="nomorSurat" placeholder="Contoh: 001/DIR/2024">
+            </div>
+            
+            <div class="form-group">
+              <label for="tanggalSurat">
+                <i class="fas fa-calendar-alt"></i>
+                Tanggal Surat
+              </label>
+              <input type="date" id="tanggalSurat">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="judulSurat">
+              <i class="fas fa-heading"></i>
+              Judul/Perihal Surat
+            </label>
+            <input type="text" id="judulSurat" placeholder="Masukkan judul atau perihal surat">
+          </div>
+
+          <div class="form-group">
+            <label for="diberikanKepada">
+              <i class="fas fa-user"></i>
+              Diberikan Kepada
+            </label>
+            <input type="text" id="diberikanKepada" placeholder="Nama penerima">
+          </div>
+
+          <div class="form-group">
+            <label for="kodeNo">
+              <i class="fas fa-code"></i>
+              Berdasarkan Kode 6/7 No.
+            </label>
+            <input type="text" id="kodeNo" placeholder="Nomor kode">
+          </div>
+
+          <div class="form-group">
+            <label for="pekerjaanProyek">
+              <i class="fas fa-project-diagram"></i>
+              Untuk Pekerjaan Proyek
+            </label>
+            <input type="text" id="pekerjaanProyek" placeholder="Nama proyek">
+          </div>
+
+          <div class="form-group">
+            <label for="lokasi">
+              <i class="fas fa-map-marker-alt"></i>
+              Lokasi
+            </label>
+            <input type="text" id="lokasi" placeholder="Lokasi proyek">
+          </div>
+
+          <div class="form-group">
+            <label for="detailSurat">
+              <i class="fas fa-align-left"></i>
+              Isi Surat
+            </label>
+            <textarea id="detailSurat" rows="6" placeholder="Tulis isi surat di sini..."></textarea>
+          </div>
+        </div>
+
+        <!-- Tanda Tangan -->
+        <div class="form-group-section">
+          <h3><i class="fas fa-signature"></i> Blok Tanda Tangan</h3>
+          
+          <div class="form-group">
+            <label for="namaMenerima">
+              <i class="fas fa-user-check"></i>
+              Yang Menerima
+            </label>
+            <input type="text" id="namaMenerima" placeholder="Nama penerima">
+            <label for="ttdMenerima" style="margin-top: 10px;">
+              <i class="fas fa-upload"></i>
+              Upload Tanda Tangan
+            </label>
+            <input type="file" id="ttdMenerima" accept="image/*" onchange="handleSignatureUpload(event, 'menerima')">
+            <div class="upload-preview" id="ttdMenerimaPreview" style="display: none;">
+              <img id="ttdMenerimaImg" style="max-width: 120px; max-height: 60px; border-radius: 5px; margin-top: 5px;">
+              <button type="button" onclick="removeSignature('menerima')" style="margin-left: 10px; padding: 3px 8px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 12px;">Hapus</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="namaSatpam">
+              <i class="fas fa-shield-alt"></i>
+              Satpam
+            </label>
+            <input type="text" id="namaSatpam" placeholder="Nama satpam">
+            <label for="ttdSatpam" style="margin-top: 10px;">
+              <i class="fas fa-upload"></i>
+              Upload Tanda Tangan
+            </label>
+            <input type="file" id="ttdSatpam" accept="image/*" onchange="handleSignatureUpload(event, 'satpam')">
+            <div class="upload-preview" id="ttdSatpamPreview" style="display: none;">
+              <img id="ttdSatpamImg" style="max-width: 120px; max-height: 60px; border-radius: 5px; margin-top: 5px;">
+              <button type="button" onclick="removeSignature('satpam')" style="margin-left: 10px; padding: 3px 8px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 12px;">Hapus</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="namaGudang">
+              <i class="fas fa-warehouse"></i>
+              Kepala Gudang
+            </label>
+            <input type="text" id="namaGudang" placeholder="Nama kepala gudang">
+            <label for="ttdGudang" style="margin-top: 10px;">
+              <i class="fas fa-upload"></i>
+              Upload Tanda Tangan
+            </label>
+            <input type="file" id="ttdGudang" accept="image/*" onchange="handleSignatureUpload(event, 'gudang')">
+            <div class="upload-preview" id="ttdGudangPreview" style="display: none;">
+              <img id="ttdGudangImg" style="max-width: 120px; max-height: 60px; border-radius: 5px; margin-top: 5px;">
+              <button type="button" onclick="removeSignature('gudang')" style="margin-left: 10px; padding: 3px 8px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 12px;">Hapus</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button type="button" class="btn btn-preview" onclick="updatePreview()">
+            <i class="fas fa-eye"></i>
+            Preview Surat
+          </button>
+          <button type="button" class="btn btn-download" onclick="downloadPDF()">
+            <i class="fas fa-download"></i>
+            Download PDF
+          </button>
+        </div>
+      </form>
     </div>
 
-    <!-- PREVIEW -->
+    <!-- PREVIEW SECTION -->
     <div class="preview-section">
-      <h3>Preview</h3>
-      <div class="preview-content" id="previewContent">
-        <p><strong>No:</strong> <span id="prevNomor">-</span></p>
-        <p><strong>Tanggal:</strong> <span id="prevTanggal">-</span></p>
-        <h2 id="prevJudul">Judul Surat</h2>
-        <p id="prevDetail">Detail surat akan muncul di sini...</p>
+      <div class="section-header">
+        <i class="fas fa-file-pdf"></i>
+        <h2>Preview Surat</h2>
+      </div>
 
-        <div class="signature-block">
-          <div>
-            <p><strong id="prevNamaMenerima">Nama Yang Menerima</strong></p>
-            <p>Yang Menerima</p>
+      <div class="preview-wrapper">
+        <div class="preview-content" id="previewContent">
+          <!-- Header Surat -->
+          <div class="letter-header">
+            <div class="header-top">
+              <!-- Logo -->
+              <div class="logo-section" id="logoSection">
+                <img id="previewLogo" style="display: none;">
+                <div id="logoPlaceholder" style="width: 100px; height: 80px; border: 2px dashed #e2e8f0; display: flex; align-items: center; justify-content: center; color: #a0aec0; font-size: 12px; text-align: center;">Logo<br>Perusahaan</div>
+              </div>
+              
+              <!-- Kop Surat -->
+              <div class="company-info">
+                <h1>PT. NAMA PERUSAHAAN</h1>
+                <p>Alamat Perusahaan, Kota, Kode Pos</p>
+                <p>Telp: (021) 1234567 | Email: info@perusahaan.com</p>
+              </div>
+              
+              <!-- Keterangan Warna -->
+              <div class="color-legend">
+                <div>Putih : Penerima Barang</div>
+                <div>Merah : Satpam</div>
+                <div>Kuning : Arsip</div>
+              </div>
+            </div>
+            <hr class="header-line">
           </div>
-          <div>
-            <p><strong id="prevNamaSecurity">Nama Security</strong></p>
-            <p>Security</p>
+
+          <!-- Judul Surat -->
+          <div class="letter-title">
+            <h2 id="prevJudulSurat">JUDUL SURAT</h2>
           </div>
-          <div>
-            <p><strong id="prevNamaGudang">Nama Kepala Gudang</strong></p>
-            <p>Kepala Gudang</p>
+
+          <!-- Detail Surat -->
+          <div class="letter-details">
+            <div class="detail-row">
+              <span class="detail-label">Diberikan Kepada</span>
+              <span class="detail-separator">:</span>
+              <span class="detail-value" id="prevDiberikanKepada">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Berdasarkan Kode 6/7 No.</span>
+              <span class="detail-separator">:</span>
+              <span class="detail-value" id="prevKodeNo">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Untuk Pekerjaan Proyek</span>
+              <span class="detail-separator">:</span>
+              <span class="detail-value" id="prevPekerjaanProyek">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Lokasi</span>
+              <span class="detail-separator">:</span>
+              <span class="detail-value" id="prevLokasi">-</span>
+            </div>
+          </div>
+
+          <!-- Isi Surat -->
+          <div class="letter-body">
+            <div class="letter-content" id="prevDetail">
+              <p>Silakan isi form untuk melihat preview surat...</p>
+            </div>
+          </div>
+
+          <!-- Tanda Tangan -->
+          <div class="signature-section">
+            <!-- Tanggal di atas tanda tangan kepala gudang -->
+            <div class="signature-date">
+              <p id="signatureDate">Jakarta, <span id="prevTanggalTtd">-</span></p>
+            </div>
+            
+            <div class="signature-block">
+              <div class="signature-item">
+                <p class="signature-title">Yang Menerima</p>
+                <div class="signature-space">
+                  <img id="prevTtdMenerima" class="signature-img" style="display: none;">
+                </div>
+                <p class="signature-name" id="prevNamaMenerima">( _________________ )</p>
+              </div>
+              
+              <div class="signature-item">
+                <p class="signature-title">Satpam</p>
+                <div class="signature-space">
+                  <img id="prevTtdSatpam" class="signature-img" style="display: none;">
+                </div>
+                <p class="signature-name" id="prevNamaSatpam">( _________________ )</p>
+              </div>
+              
+              <div class="signature-item">
+                <p class="signature-title">Kepala Gudang</p>
+                <div class="signature-space">
+                  <img id="prevTtdGudang" class="signature-img" style="display: none;">
+                </div>
+                <p class="signature-name" id="prevNamaGudang">( _________________ )</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Sedang memproses PDF...</p>
+    </div>
+  </div>
+
   <!-- Library PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-  <script src="script.js"></script>
-</body>
+  <script>
+    // Set tanggal hari ini sebagai default
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('tanggalSurat').value = today;
+        
+        // Auto-update preview saat mengetik
+        const inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', updatePreview);
+        });
+        
+        // Initial preview
+        updatePreview();
+    });
+
+    function updatePreview() {
+        // Ambil nilai dari form
+        const judulSurat = document.getElementById('judulSurat').value || 'JUDUL SURAT';
+        const tanggalSurat = document.getElementById('tanggalSurat').value;
+        const diberikanKepada = document.getElementById('diberikanKepada').value || '-';
+        const kodeNo = document.getElementById('kodeNo').value || '-';
+        const pekerjaanProyek = document.getElementById('pekerjaanProyek').value || '-';
+        const lokasi = document.getElementById('lokasi').value || '-';
+        const detailSurat = document.getElementById('detailSurat').value || 'Silakan isi form untuk melihat preview surat...';
+        const namaMenerima = document.getElementById('namaMenerima').value || '_________________';
+        const namaSatpam = document.getElementById('namaSatpam').value || '_________________';
+        const namaGudang = document.getElementById('namaGudang').value || '_________________';
+
+        // Format tanggal
+        let formattedDate = '-';
+        if (tanggalSurat) {
+            const date = new Date(tanggalSurat);
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            formattedDate = date.toLocaleDateString('id-ID', options);
+        }
+
+        // Update preview
+        document.getElementById('prevJudulSurat').textContent = judulSurat.toUpperCase();
+        document.getElementById('prevDiberikanKepada').textContent = diberikanKepada;
+        document.getElementById('prevKodeNo').textContent = kodeNo;
+        document.getElementById('prevPekerjaanProyek').textContent = pekerjaanProyek;
+        document.getElementById('prevLokasi').textContent = lokasi;
+        
+        // Format isi surat dengan paragraf
+        const formattedDetail = detailSurat.replace(/\n/g, '</p><p>');
+        document.getElementById('prevDetail').innerHTML = `<p>${formattedDetail}</p>`;
+        
+        // Update nama-nama
+        document.getElementById('prevNamaMenerima').textContent = `( ${namaMenerima} )`;
+        document.getElementById('prevNamaSatpam').textContent = `( ${namaSatpam} )`;
+        document.getElementById('prevNamaGudang').textContent = `( ${namaGudang} )`;
+
+        // Update tanggal untuk tanda tangan
+        document.getElementById('prevTanggalTtd').textContent = formattedDate;
+
+        // Animasi update
+        const previewContent = document.getElementById('previewContent');
+        previewContent.style.transform = 'scale(0.98)';
+        previewContent.style.opacity = '0.7';
+        
+        setTimeout(() => {
+            previewContent.style.transform = 'scale(1)';
+            previewContent.style.opacity = '1';
+            previewContent.style.transition = 'all 0.3s ease';
+        }, 100);
+    }
+
+    // Fungsi upload logo perusahaan
+    function handleLogoUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const logoImg = document.getElementById('logoImg');
+                const logoPreview = document.getElementById('logoPreview');
+                const previewLogo = document.getElementById('previewLogo');
+                const logoPlaceholder = document.getElementById('logoPlaceholder');
+                
+                logoImg.src = e.target.result;
+                previewLogo.src = e.target.result;
+                logoPreview.style.display = 'block';
+                previewLogo.style.display = 'block';
+                logoPlaceholder.style.display = 'none';
+                
+                showNotification('Logo berhasil diupload!', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Fungsi hapus logo
+    function removeLogo() {
+        document.getElementById('logoPerusahaan').value = '';
+        document.getElementById('logoPreview').style.display = 'none';
+        document.getElementById('previewLogo').style.display = 'none';
+        document.getElementById('logoPlaceholder').style.display = 'flex';
+        showNotification('Logo berhasil dihapus!', 'success');
+    }
+
+    // Fungsi upload tanda tangan
+    function handleSignatureUpload(event, type) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewImg = document.getElementById(`ttd${type.charAt(0).toUpperCase() + type.slice(1)}Img`);
+                const previewDiv = document.getElementById(`ttd${type.charAt(0).toUpperCase() + type.slice(1)}Preview`);
+                const signatureImg = document.getElementById(`prevTtd${type.charAt(0).toUpperCase() + type.slice(1)}`);
+                
+                previewImg.src = e.target.result;
+                signatureImg.src = e.target.result;
+                previewDiv.style.display = 'block';
+                signatureImg.style.display = 'block';
+                
+                showNotification(`Tanda tangan ${type} berhasil diupload!`, 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Fungsi hapus tanda tangan
+    function removeSignature(type) {
+        document.getElementById(`ttd${type.charAt(0).toUpperCase() + type.slice(1)}`).value = '';
+        document.getElementById(`ttd${type.charAt(0).toUpperCase() + type.slice(1)}Preview`).style.display = 'none';
+        document.getElementById(`prevTtd${type.charAt(0).toUpperCase() + type.slice(1)}`).style.display = 'none';
+        showNotification(`Tanda tangan ${type} berhasil dihapus!`, 'success');
+    }
+
+    function downloadPDF() {
+        // Validasi form
+        const requiredFields = ['judulSurat', 'tanggalSurat', 'diberikanKepada', 'detailSurat'];
+        const emptyFields = [];
+        
+        requiredFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (!field.value.trim()) {
+                const label = document.querySelector(`label[for="${fieldId}"]`).textContent.trim();
+                emptyFields.push(label);
+            }
+        });
+        
+        if (emptyFields.length > 0) {
+            alert(`Mohon lengkapi field berikut:\n- ${emptyFields.join('\n- ')}`);
+            return;
+        }
+
+        // Show loading
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        loadingOverlay.style.display = 'flex';
+
+        // Update preview terlebih dahulu
+        updatePreview();
+
+        // Konfigurasi PDF
+        const element = document.getElementById('previewContent');
+        const opt = {
+            margin: [0.5, 0.5, 0.5, 0.5],
+            filename: `Surat_${document.getElementById('judulSurat').value.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2,
+                useCORS: true,
+                letterRendering: true
+            },
+            jsPDF: { 
+                unit: 'in', 
+                format: 'a4', 
+                orientation: 'portrait' 
+            }
+        };
+
+        // Generate PDF
+        html2pdf().set(opt).from(element).save().then(() => {
+            // Hide loading
+            loadingOverlay.style.display = 'none';
+            
+            // Show success message
+            showNotification('PDF berhasil diunduh!', 'success');
+        }).catch((error) => {
+            // Hide loading
+            loadingOverlay.style.display = 'none';
+            
+            // Show error message
+            showNotification('Gagal mengunduh PDF. Silakan coba lagi.', 'error');
+            console.error('PDF Error:', error);
+        });
+    }
+
+    function showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#48bb78' : '#f56565'};
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+            font-weight: 600;
+        `;
+        
+        // Add animation keyframes
+        if (!document.querySelector('#notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'notification-styles';
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                @keyframes slideOut {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        document.body.appendChild(notification);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + Enter untuk preview
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            updatePreview();
+        }
+        
+        // Ctrl/Cmd + S untuk download
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            downloadPDF();
+        }
+    });
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983bec82467f44b9',t:'MTc1ODY1MDI0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
