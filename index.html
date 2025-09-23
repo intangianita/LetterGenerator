@@ -854,6 +854,12 @@
 
     function updatePreview() {
         // Ambil nilai dari form
+        const namaPerusahaan = document.getElementById('namaPerusahaan').value || 'PT. NAMA PERUSAHAAN';
+        const alamatPerusahaan = document.getElementById('alamatPerusahaan').value || 'Alamat Perusahaan, Kota, Kode Pos';
+        const kontakPerusahaan = document.getElementById('kontakPerusahaan').value || 'Telp: (021) 1234567 | Email: info@perusahaan.com';
+        const keteranganPutih = document.getElementById('keteranganPutih').value || 'Putih : Penerima Barang';
+        const keteranganMerah = document.getElementById('keteranganMerah').value || 'Merah : Satpam';
+        const keteranganKuning = document.getElementById('keteranganKuning').value || 'Kuning : Arsip';
         const judulSurat = document.getElementById('judulSurat').value || 'JUDUL SURAT';
         const tanggalSurat = document.getElementById('tanggalSurat').value;
         const diberikanKepada = document.getElementById('diberikanKepada').value || '-';
@@ -876,6 +882,14 @@
             };
             formattedDate = date.toLocaleDateString('id-ID', options);
         }
+
+        // Update preview kop surat
+        document.getElementById('prevNamaPerusahaan').textContent = namaPerusahaan;
+        document.getElementById('prevAlamatPerusahaan').textContent = alamatPerusahaan;
+        document.getElementById('prevKontakPerusahaan').textContent = kontakPerusahaan;
+        document.getElementById('prevKeteranganPutih').textContent = keteranganPutih;
+        document.getElementById('prevKeteranganMerah').textContent = keteranganMerah;
+        document.getElementById('prevKeteranganKuning').textContent = keteranganKuning;
 
         // Update preview
         document.getElementById('prevJudulSurat').textContent = judulSurat.toUpperCase();
@@ -1113,5 +1127,5 @@
         }
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983bec82467f44b9',t:'MTc1ODY1MDI0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983bf806a1b77d50',t:'MTc1ODY1MDcxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
