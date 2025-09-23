@@ -58,30 +58,28 @@ input[type="text"], input[type="date"], input[type="number"], textarea, input[ty
 #previewTitle { text-align:center; margin:18px 0; text-decoration:underline; font-size:16px; }
 #previewBody { white-space: pre-line; line-height:1.6; font-size:14px; }
 
-/* ===== SIGNATURE BLOCK (HORIZONTAL) ===== */
+/* === Signature Block Horizontal === */
 .signature-block {
   margin-top: 60px;
-  display: flex;
-  flex-direction: row;   /* sejajar horizontal */
-  justify-content: space-between; /* beri jarak rata */
+  display: flex;                /* aktifkan flexbox */
+  flex-direction: row;          /* horizontal */
+  justify-content: space-around; /* beri jarak antar kolom */
+  align-items: flex-start;      /* rata atas */
   text-align: center;
 }
 
 .sig-col {
-  flex: 1;
-  position: relative;
-  min-height: 140px; /* beri tinggi area tanda tangan */
+  flex: 1;                       /* biar lebar sama */
+  min-width: 150px;              /* minimal lebar kolom */
+  padding: 0 10px;               /* jarak kiri kanan */
 }
 
 .sig-space {
-  height: 80px; /* ruang kosong untuk tanda tangan */
+  height: 80px;                  /* area kosong tanda tangan */
 }
 
 .sig-col img {
-  position: absolute;
   max-height: 80px;
   display: block;
-  top: 0; /* default posisi dari atas, bisa digeser via JS */
-  left: 50%;
-  transform: translateX(-50%); /* posisi tengah default */
+  margin: 0 auto;                /* posisikan ke tengah */
 }
