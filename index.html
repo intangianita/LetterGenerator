@@ -5,107 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perancang Surat</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
+
+  <h2>Perancang Surat</h2>
+
   <div class="container">
-    <!-- Form Input -->
-    <div class="form-panel">
-      <h2>Perancang Surat</h2>
-      <form id="letterForm">
-        <label>Logo Surat</label>
-        <input type="file" id="letterLogo" accept="image/*">
+    <!-- FORM -->
+    <div class="form-section">
+      <label>Nomor Surat: <input type="text" id="nomorSurat"></label><br>
+      <label>Tanggal Surat: <input type="date" id="tanggalSurat"></label><br>
+      <label>Judul Surat: <input type="text" id="judulSurat"></label><br>
+      <label>Detail Surat: <textarea id="detailSurat"></textarea></label><br>
 
-        <label>Kepala Surat</label>
-        <textarea id="letterHead" rows="2"></textarea>
+      <h3>Blok Tanda Tangan</h3>
+      <label>Yang Menerima: <input type="text" id="namaMenerima"></label><br>
+      <label>Security: <input type="text" id="namaSecurity"></label><br>
+      <label>Kepala Gudang: <input type="text" id="namaGudang"></label><br>
 
-        <label>Nomor Surat</label>
-        <input type="text" id="letterNumber" placeholder="0001">
-
-        <label>Tanggal</label>
-        <input type="date" id="letterDate">
-
-        <label>Judul</label>
-        <input type="text" id="letterTitle" placeholder="Judul Surat">
-
-        <label>Isi Surat</label>
-        <textarea id="letterBody" rows="6"></textarea>
-
-        <h3>Blok Tanda Tangan</h3>
-        <label>Yang Menerima - Nama</label>
-        <input type="text" id="sigName1" placeholder="Nama Yang Menerima">
-        <input type="file" id="sigFile1" accept="image/*">
-
-        <label>Security - Nama</label>
-        <input type="text" id="sigName2" placeholder="Nama Security">
-        <input type="file" id="sigFile2" accept="image/*">
-
-        <label>Kepala Gudang - Nama</label>
-        <input type="text" id="sigName3" placeholder="Nama Kepala Gudang">
-        <input type="file" id="sigFile3" accept="image/*">
-
-        <button type="button" id="downloadPDF">Unduh PDF</button>
-      </form>
+      <button onclick="updatePreview()">Preview</button>
+      <button onclick="downloadPDF()">Download PDF</button>
     </div>
 
-    <!-- Preview -->
-    <div class="preview-panel">
-      <h2>Pratinjau</h2>
-      <div id="paperPreview" class="paper">
-        <!-- Header surat -->
-        <div class="paper-header">
-          <div class="logo"><img id="previewLogo" style="display:none;"></div>
-          <div class="kop" id="previewHead">Kepala Surat</div>
-          <div class="detail">
-            <div id="previewNumber">No: -</div>
-            <div id="previewDate">-</div>
-          </div>
-        </div>
+    <!-- PREVIEW -->
+    <div class="preview-section">
+      <h3>Preview</h3>
+      <div class="preview-content" id="previewContent">
+        <p><strong>No:</strong> <span id="prevNomor">-</span></p>
+        <p><strong>Tanggal:</strong> <span id="prevTanggal">-</span></p>
+        <h2 id="prevJudul">Judul Surat</h2>
+        <p id="prevDetail">Detail surat akan muncul di sini...</p>
 
-        <!-- Judul dan isi -->
-        <h2 id="previewTitle">Judul Surat</h2>
-        <div id="previewBody">Isi surat akan tampil di sini.</div>
-
-        <!-- Tabel barang -->
-        <table class="table-barang">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama Barang</th>
-              <th>Satuan</th>
-              <th>Jumlah (Angka)</th>
-              <th>Jumlah (Huruf)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>2</td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>3</td><td></td><td></td><td></td><td></td></tr>
-          </tbody>
-        </table>
-
-        <!-- Blok tanda tangan -->
         <div class="signature-block">
-          <div class="sig-col">
-            <div>Yang Menerima</div>
-            <div class="sig-space"><img id="sigImg1" style="display:none;"></div>
-            <div id="sigPreviewName1">Nama Yang Menerima</div>
+          <div>
+            <p><strong id="prevNamaMenerima">Nama Yang Menerima</strong></p>
+            <p>Yang Menerima</p>
           </div>
-          <div class="sig-col">
-            <div>Security</div>
-            <div class="sig-space"><img id="sigImg2" style="display:none;"></div>
-            <div id="sigPreviewName2">Nama Security</div>
+          <div>
+            <p><strong id="prevNamaSecurity">Nama Security</strong></p>
+            <p>Security</p>
           </div>
-          <div class="sig-col">
-            <div>Kepala Gudang</div>
-            <div class="sig-space"><img id="sigImg3" style="display:none;"></div>
-            <div id="sigPreviewName3">Nama Kepala Gudang</div>
+          <div>
+            <p><strong id="prevNamaGudang">Nama Kepala Gudang</strong></p>
+            <p>Kepala Gudang</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Library PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
