@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Letter Generator</title>
+  <title>Perancang Surat</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>Letter Generator</h1>
+    <h1>Perancang Surat</h1>
     <form id="letterForm">
-      <label>Letter Logo</label>
+      <label>Logo Surat</label>
       <input type="file" id="letterLogo" accept="image/*">
 
-      <label>Letter Head</label>
+      <label>Kepala Surat</label>
       <textarea id="letterHead" rows="3"></textarea>
 
-      <label>Letter Number</label>
+      <label>Nomor Surat</label>
       <input type="text" id="letterNumber" placeholder="0001">
 
       <label>Tanggal</label>
@@ -57,11 +57,11 @@
         </div>
       </div>
 
-      <button type="button" id="downloadPDF">Download PDF</button>
-      <button type="button" id="generateBase64">Generate Base64</button>
+      <button type="button" id="downloadPDF">Unduh PDF</button>
+      <button type="button" id="generateBase64">Buat Base64</button>
     </form>
 
-    <h2>Preview</h2>
+    <h2>Pratinjau</h2>
     <div id="paperPreview" class="paper">
       <div class="paper-header">
         <img id="previewLogo" style="max-height:80px; display:none;" />
@@ -103,7 +103,7 @@
     </div>
 
     <div id="base64Output" style="display:none; margin-top:20px;">
-      <h3>Base64 Output</h3>
+      <h3>Hasil Base64</h3>
       <textarea id="base64Content" rows="6" style="width:100%;"></textarea>
     </div>
   </div>
