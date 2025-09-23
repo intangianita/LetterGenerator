@@ -1,78 +1,87 @@
-/* ===== GLOBAL STYLE ===== */
+/* ===== GLOBAL ===== */
+* { box-sizing: border-box; }
 body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background: #f2f2f2;
+  font-family: "Times New Roman", serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+  color: #222;
 }
-
 .container {
   display: flex;
   gap: 20px;
+  align-items: flex-start;
 }
 
 /* ===== FORM ===== */
-form {
-  flex: 1;
+.form {
+  width: 360px;
   background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 18px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.form h1 { font-size: 20px; margin-bottom: 12px; }
+label { display:block; font-weight:600; margin-top:8px; margin-bottom:6px; font-size:13px; }
+input[type="text"], input[type="date"], input[type="number"], textarea, input[type="file"] {
+  width:100%; padding:8px 10px; border:1px solid #d0d5d9; border-radius:6px; font-family:inherit;
+}
+.sig-inputs { display:flex; gap:10px; margin-top:8px; }
+.sig-input-col { flex:1; }
+
+/* ===== ACTIONS ===== */
+.actions { margin-top:12px; display:flex; gap:8px; }
+.actions button {
+  padding:8px 12px; border-radius:6px; border:none; cursor:pointer; background:#007bff; color:white;
 }
 
-form h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-/* ===== PREVIEW AREA ===== */
-.preview {
-  flex: 2;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
+/* ===== PREVIEW ===== */
+.preview { flex:1; }
 .paper {
-  width: 210mm;
-  min-height: 297mm;
+  width: 595px; /* approx A4 width in px for screen */
+  min-height: 842px; /* approx A4 height */
+  margin: 0 auto;
   background: #fff;
-  padding: 20mm;
-  margin: auto;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  padding: 36px;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   position: relative;
 }
+.paper-header { display:flex; gap:16px; align-items:flex-start; }
+.paper-header img { max-height:80px; object-fit:contain; display:block; }
+#previewHead { white-space: pre-line; font-size: 14px; }
 
-.paper h1, .paper h2, .paper h3, .paper p {
-  margin: 0 0 10px;
-}
+/* meta */
+.paper-meta { text-align:right; margin-top:6px; margin-bottom:18px; font-size:14px; }
 
-/* ===== HEADER SURAT ===== */
-#previewLogo {
-  max-height: 80px;
-  display: block;
-  margin-bottom: 20px;
-}
+/* title & body */
+#previewTitle { text-align:center; margin:18px 0; text-decoration:underline; font-size:16px; }
+#previewBody { white-space: pre-line; line-height:1.6; font-size:14px; }
 
-/* ===== BLOK TANDA TANGAN VERTIKAL ===== */
+/* ===== SIGNATURE BLOCK (HORIZONTAL) ===== */
 .signature-block {
   margin-top: 60px;
   display: flex;
-  flex-direction: column; /* tanda tangan bertumpuk ke bawah */
-  align-items: flex-end;  /* rata kanan */
-  gap: 60px;              /* jarak antar blok tanda tangan */
+  flex-direction: row;   /* sejajar horizontal */
+  justify-content: space-between; /* beri jarak rata */
   text-align: center;
 }
 
 .sig-col {
-  width: 250px;           /* lebar tiap blok tanda tangan */
+  flex: 1;
+  position: relative;
+  min-height: 140px; /* beri tinggi area tanda tangan */
 }
 
 .sig-space {
-  height: 100px;          /* ruang untuk tanda tangan */
-  margin-bottom: 10px;
+  height: 80px; /* ruang kosong untuk tanda tangan */
 }
 
 .sig-col img {
+  position: absolute;
   max-height: 80px;
+  display: block;
+  top: 0; /* default posisi dari atas, bisa digeser via JS */
+  left: 50%;
+  transform: translateX(-50%); /* posisi tengah default */
 }
