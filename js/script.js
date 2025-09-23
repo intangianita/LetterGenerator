@@ -14,19 +14,19 @@ function updatePreview() {
     document.getElementById('letterBody').value || "Isi surat akan tampil di sini.";
 }
 
-// Format tanggal ke format Indonesia
-function formatDate(dateStr) {
-  if (!dateStr) return "-";
-  const date = new Date(dateStr);
-  const months = [
-    'Januari','Februari','Maret','April','Mei','Juni',
-    'Juli','Agustus','September','Oktober','November','Desember'
-  ];
-  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
-}
+// // Format tanggal ke format Indonesia
+// function formatDate(dateStr) {
+//   if (!dateStr) return "-";
+//   const date = new Date(dateStr);
+//   const months = [
+//     'Januari','Februari','Maret','April','Mei','Juni',
+//     'Juli','Agustus','September','Oktober','November','Desember'
+//   ];
+//   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+// }
 
-// Set default date
-document.getElementById('letterDate').value = new Date().toISOString().split('T')[0];
+// // Set default date
+// document.getElementById('letterDate').value = new Date().toISOString().split('T')[0];
 
 // Handle Logo Upload
 document.getElementById('letterLogo').addEventListener('change', (e) => {
@@ -60,25 +60,25 @@ document.getElementById('downloadPDF').addEventListener('click', async () => {
   }
 });
 
-// Handle Base64 generation
-document.getElementById('generateBase64').addEventListener('click', async () => {
-  try {
-    const canvas = await html2canvas(paperPreview, {
-      scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff'
-    });
-    const base64 = canvas.toDataURL('image/png');
-    document.getElementById('base64Content').textContent = base64;
-    document.getElementById('base64Output').style.display = 'block';
-    navigator.clipboard.writeText(base64).then(() => {
-      alert('Base64 berhasil disalin ke clipboard!');
-    }).catch(() => {
-      alert('Base64 berhasil dibuat! Silakan copy manual dari kotak di bawah.');
-    });
-  } catch (error) {
-    alert('Gagal membuat Base64. Silakan coba lagi.');
-    console.error('Base64 Error:', error);
-  }
-});
+// // Handle Base64 generation
+// document.getElementById('generateBase64').addEventListener('click', async () => {
+//   try {
+//     const canvas = await html2canvas(paperPreview, {
+//       scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff'
+//     });
+//     const base64 = canvas.toDataURL('image/png');
+//     document.getElementById('base64Content').textContent = base64;
+//     document.getElementById('base64Output').style.display = 'block';
+//     navigator.clipboard.writeText(base64).then(() => {
+//       alert('Base64 berhasil disalin ke clipboard!');
+//     }).catch(() => {
+//       alert('Base64 berhasil dibuat! Silakan copy manual dari kotak di bawah.');
+//     });
+//   } catch (error) {
+//     alert('Gagal membuat Base64. Silakan coba lagi.');
+//     console.error('Base64 Error:', error);
+//   }
+// });
 
 // Auto-update preview on input
 form.querySelectorAll('input, textarea, select').forEach(input => {
