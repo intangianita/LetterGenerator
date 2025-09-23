@@ -16,19 +16,19 @@ function updatePreview() {
     document.getElementById('letterBody').value || "Isi surat akan tampil di sini.";
 }
 
-// // Format tanggal ke format Indonesia
-// function formatDate(dateStr) {
-//   if (!dateStr) return "-";
-//   const date = new Date(dateStr);
-//   const months = [
-//     'Januari','Februari','Maret','April','Mei','Juni',
-//     'Juli','Agustus','September','Oktober','November','Desember'
-//   ];
-//   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
-// }
+// Format tanggal ke format Indonesia
+function formatDate(dateStr) {
+  if (!dateStr) return "-";
+  const date = new Date(dateStr);
+  const months = [
+    'Januari','Februari','Maret','April','Mei','Juni',
+    'Juli','Agustus','September','Oktober','November','Desember'
+  ];
+  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
 
-// // Set default date
-// document.getElementById('letterDate').value = new Date().toISOString().split('T')[0];
+// Set default date
+document.getElementById('letterDate').value = new Date().toISOString().split('T')[0];
 
 // Handle Logo Upload
 document.getElementById('letterLogo').addEventListener('change', (e) => {
