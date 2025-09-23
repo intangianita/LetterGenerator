@@ -1,85 +1,74 @@
-/* ===== GLOBAL ===== */
-* { box-sizing: border-box; }
 body {
-  font-family: "Times New Roman", serif;
-  background: #f4f4f4;
-  margin: 0;
+  font-family: Arial, sans-serif;
   padding: 20px;
-  color: #222;
+  background: #f9f9f9;
 }
+
 .container {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-/* ===== FORM ===== */
-.form {
-  width: 360px;
+  max-width: 900px;
+  margin: auto;
   background: #fff;
-  padding: 18px;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-}
-.form h1 { font-size: 20px; margin-bottom: 12px; }
-label { display:block; font-weight:600; margin-top:8px; margin-bottom:6px; font-size:13px; }
-input[type="text"], input[type="date"], input[type="number"], textarea, input[type="file"] {
-  width:100%; padding:8px 10px; border:1px solid #d0d5d9; border-radius:6px; font-family:inherit;
-}
-.sig-inputs { display:flex; gap:10px; margin-top:8px; }
-.sig-input-col { flex:1; }
-
-/* ===== ACTIONS ===== */
-.actions { margin-top:12px; display:flex; gap:8px; }
-.actions button {
-  padding:8px 12px; border-radius:6px; border:none; cursor:pointer; background:#007bff; color:white;
 }
 
-/* ===== PREVIEW ===== */
-.preview { flex:1; }
 .paper {
-  width: 595px; /* approx A4 width in px for screen */
-  min-height: 842px; /* approx A4 height */
-  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #000;
   background: #fff;
-  padding: 36px;
-  border: 1px solid #e6e6e6;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  position: relative;
 }
-.paper-header { display:flex; gap:16px; align-items:flex-start; }
-.paper-header img { max-height:80px; object-fit:contain; display:block; }
-#previewHead { white-space: pre-line; font-size: 14px; }
 
-/* meta */
-.paper-meta { text-align:right; margin-top:6px; margin-bottom:18px; font-size:14px; }
+/* Header */
+.paper-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-left, .header-center, .header-right {
+  flex: 1;
+  text-align: center;
+}
+.header-left { text-align: left; }
+.header-right { text-align: right; }
 
-/* title & body */
-#previewTitle { text-align:center; margin:18px 0; text-decoration:underline; font-size:16px; }
-#previewBody { white-space: pre-line; line-height:1.6; font-size:14px; }
+/* Judul */
+.title {
+  text-align: center;
+  margin-top: 20px;
+}
 
-/* === Signature Block Horizontal === */
-.signature-block {
-  margin-top: 60px;
-  display: flex;                /* aktifkan flexbox */
-  flex-direction: row;          /* horizontal */
-  justify-content: space-around; /* beri jarak antar kolom */
-  align-items: flex-start;      /* rata atas */
+/* Table */
+.items-table, #inputTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.items-table th, .items-table td,
+#inputTable th, #inputTable td {
+  border: 1px solid #000;
+  padding: 6px;
   text-align: center;
 }
 
+/* Tanggal */
+.letter-date {
+  text-align: right;
+  margin-top: 20px;
+}
+
+/* Signature Block */
+.signature-block {
+  margin-top: 40px;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-around;
+  text-align: center;
+}
 .sig-col {
-  flex: 1;                       /* biar lebar sama */
-  min-width: 150px;              /* minimal lebar kolom */
-  padding: 0 10px;               /* jarak kiri kanan */
+  flex: 1;
+  min-width: 150px;
 }
-
 .sig-space {
-  height: 80px;                  /* area kosong tanda tangan */
-}
-
-.sig-col img {
-  max-height: 80px;
-  display: block;
-  margin: 0 auto;                /* posisikan ke tengah */
+  height: 80px;
 }
