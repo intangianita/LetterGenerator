@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Letter Generator</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -16,10 +16,10 @@
       <input type="file" id="letterLogo" accept="image/*">
 
       <label>Letter Head</label>
-      <textarea type="text" id="letterHead" rows="3" placeholder="Kepala Surat (misal: Nama Perusahaan, Alamat, Kontak)"></textarea>
+      <textarea id="letterHead" rows="3"></textarea>
 
       <label>Letter Number</label>
-      <input type="text" id="letterNumber" placeholder="001/ABC/2025">
+      <input type="text" id="letterNumber" placeholder="0001">
 
       <label>Tanggal</label>
       <input type="date" id="letterDate">
@@ -28,29 +28,83 @@
       <input type="text" id="letterTitle" placeholder="Judul Surat">
 
       <label>Isi Surat</label>
-      <textarea id="letterBody" rows="5" placeholder="Tulis isi surat di sini..."></textarea>
-    </form>
+      <textarea id="letterBody" rows="6"></textarea>
 
-    <div class="actions">
-      <button id="downloadPDF">Download PDF</button>
-    </div>
+      <h3>Blok Tanda Tangan</h3>
+      <div class="sig-inputs">
+        <div>
+          <label>Yang Menerima - Nama</label>
+          <input type="text" id="sigInputName1" placeholder="Nama Yang Menerima">
+          <input type="hidden" id="sigInputTitle1" value="Yang Menerima">
+          <label>Upload Tanda Tangan</label>
+          <input type="file" id="sigInputFile1" accept="image/*">
+        </div>
+
+        <div>
+          <label>Security - Nama</label>
+          <input type="text" id="sigInputName2" placeholder="Nama Security">
+          <input type="hidden" id="sigInputTitle2" value="Security">
+          <label>Upload Tanda Tangan</label>
+          <input type="file" id="sigInputFile2" accept="image/*">
+        </div>
+
+        <div>
+          <label>Kepala Gudang - Nama</label>
+          <input type="text" id="sigInputName3" placeholder="Nama Kepala Gudang">
+          <input type="hidden" id="sigInputTitle3" value="Kepala Gudang">
+          <label>Upload Tanda Tangan</label>
+          <input type="file" id="sigInputFile3" accept="image/*">
+        </div>
+      </div>
+
+      <button type="button" id="downloadPDF">Download PDF</button>
+      <button type="button" id="generateBase64">Generate Base64</button>
+    </form>
 
     <h2>Preview</h2>
     <div id="paperPreview" class="paper">
-      <div class="letter-header">
-        <img id="previewLogo"/>
-        <div class="header-text">
-          <p id="previewNumber"></p>
-          <p id="previewDate"></p>
+      <div class="paper-header">
+        <img id="previewLogo" style="max-height:80px; display:none;" />
+        <div id="previewHead">Kepala Surat</div>
+      </div>
+      <div class="paper-meta">
+        <span id="previewNumber">No: -</span><br>
+        <span id="previewDate">-</span>
+      </div>
+      <h2 id="previewTitle">Judul Surat</h2>
+      <div id="previewBody">Isi surat akan tampil di sini.</div>
+
+      <!-- Blok tanda tangan -->
+      <div id="signatureBlock" class="signature-block">
+        <div class="sig-col">
+          <div class="sig-space">
+            <img id="sigImg1" style="max-height:80px; display:none;" />
+          </div>
+          <p id="sigName1"><b>Nama Yang Menerima</b></p>
+          <p id="sigTitle1">Yang Menerima</p>
+        </div>
+
+        <div class="sig-col">
+          <div class="sig-space">
+            <img id="sigImg2" style="max-height:80px; display:none;" />
+          </div>
+          <p id="sigName2"><b>Nama Security</b></p>
+          <p id="sigTitle2">Security</p>
+        </div>
+
+        <div class="sig-col">
+          <div class="sig-space">
+            <img id="sigImg3" style="max-height:80px; display:none;" />
+          </div>
+          <p id="sigName3"><b>Nama Kepala Gudang</b></p>
+          <p id="sigTitle3">Kepala Gudang</p>
         </div>
       </div>
-      <h3 id="previewTitle"></h3>
-      <p id="previewBody"></p>
     </div>
 
-    <div id="base64Output">
-      <h2>Base64 Result</h2>
-      <textarea id="base64Content" readonly></textarea>
+    <div id="base64Output" style="display:none; margin-top:20px;">
+      <h3>Base64 Output</h3>
+      <textarea id="base64Content" rows="6" style="width:100%;"></textarea>
     </div>
   </div>
 

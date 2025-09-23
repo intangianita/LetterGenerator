@@ -4,7 +4,7 @@ const previewLogo = document.getElementById('previewLogo');
 
 // Update preview
 function updatePreview() {
-  document.getElementById('letterHead').textContent =
+  document.getElementById('previewHead').textContent =
     document.getElementById('letterHead').value || "Kepala Surat";
   document.getElementById('previewNumber').textContent =
     document.getElementById('letterNumber').value || "No: -";
@@ -14,9 +14,22 @@ function updatePreview() {
     document.getElementById('letterTitle').value || "Judul Surat";
   document.getElementById('previewBody').textContent =
     document.getElementById('letterBody').value || "Isi surat akan tampil di sini.";
+
+  // Nama tanda tangan
+  document.getElementById('sigName1').textContent =
+    document.getElementById('sigInputName1').value || "Nama Yang Menerima";
+  document.getElementById('sigTitle1').textContent = "Yang Menerima";
+
+  document.getElementById('sigName2').textContent =
+    document.getElementById('sigInputName2').value || "Nama Security";
+  document.getElementById('sigTitle2').textContent = "Security";
+
+  document.getElementById('sigName3').textContent =
+    document.getElementById('sigInputName3').value || "Nama Kepala Gudang";
+  document.getElementById('sigTitle3').textContent = "Kepala Gudang";
 }
 
-// Format tanggal ke format Indonesia
+// Format tanggal
 function formatDate(dateStr) {
   if (!dateStr) return "-";
   const date = new Date(dateStr);
@@ -30,7 +43,7 @@ function formatDate(dateStr) {
 // Set default date
 document.getElementById('letterDate').value = new Date().toISOString().split('T')[0];
 
-// Handle Logo Upload
+// Upload logo
 document.getElementById('letterLogo').addEventListener('change', (e) => {
   const file = e.target.files[0];
   if (file) {
@@ -43,7 +56,26 @@ document.getElementById('letterLogo').addEventListener('change', (e) => {
   }
 });
 
-// Handle PDF download
+// Upload tanda tangan
+function handleSignatureUpload(fileInputId, imgId) {
+  document.getElementById(fileInputId).addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = document.getElementById(imgId);
+        img.src = evt.target.result;
+        img.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+}
+handleSignatureUpload('sigInputFile1', 'sigImg1');
+handleSignatureUpload('sigInputFile2', 'sigImg2');
+handleSignatureUpload('sigInputFile3', 'sigImg3');
+
+// PDF download
 document.getElementById('downloadPDF').addEventListener('click', async () => {
   const { jsPDF } = window.jspdf;
   try {
@@ -62,7 +94,7 @@ document.getElementById('downloadPDF').addEventListener('click', async () => {
   }
 });
 
-// Handle Base64 generation
+// Base64 generate
 document.getElementById('generateBase64').addEventListener('click', async () => {
   try {
     const canvas = await html2canvas(paperPreview, {
@@ -82,10 +114,10 @@ document.getElementById('generateBase64').addEventListener('click', async () => 
   }
 });
 
-// Auto-update preview on input
+// Auto-update preview
 form.querySelectorAll('input, textarea, select').forEach(input => {
   input.addEventListener('input', updatePreview);
 });
 
-// Initial preview update
+// Initial
 updatePreview();
