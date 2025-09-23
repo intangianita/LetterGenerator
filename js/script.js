@@ -60,25 +60,25 @@ document.getElementById('downloadPDF').addEventListener('click', async () => {
   }
 });
 
-// // Handle Base64 generation
-// document.getElementById('generateBase64').addEventListener('click', async () => {
-//   try {
-//     const canvas = await html2canvas(paperPreview, {
-//       scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff'
-//     });
-//     const base64 = canvas.toDataURL('image/png');
-//     document.getElementById('base64Content').textContent = base64;
-//     document.getElementById('base64Output').style.display = 'block';
-//     navigator.clipboard.writeText(base64).then(() => {
-//       alert('Base64 berhasil disalin ke clipboard!');
-//     }).catch(() => {
-//       alert('Base64 berhasil dibuat! Silakan copy manual dari kotak di bawah.');
-//     });
-//   } catch (error) {
-//     alert('Gagal membuat Base64. Silakan coba lagi.');
-//     console.error('Base64 Error:', error);
-//   }
-// });
+// Handle Base64 generation
+document.getElementById('generateBase64').addEventListener('click', async () => {
+  try {
+    const canvas = await html2canvas(paperPreview, {
+      scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff'
+    });
+    const base64 = canvas.toDataURL('image/png');
+    document.getElementById('base64Content').textContent = base64;
+    document.getElementById('base64Output').style.display = 'block';
+    navigator.clipboard.writeText(base64).then(() => {
+      alert('Base64 berhasil disalin ke clipboard!');
+    }).catch(() => {
+      alert('Base64 berhasil dibuat! Silakan copy manual dari kotak di bawah.');
+    });
+  } catch (error) {
+    alert('Gagal membuat Base64. Silakan coba lagi.');
+    console.error('Base64 Error:', error);
+  }
+});
 
 // Auto-update preview on input
 form.querySelectorAll('input, textarea, select').forEach(input => {
