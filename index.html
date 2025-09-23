@@ -3,19 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generator Surat</title>
+  <title>Letter Generator</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>Generator Surat</h1>
+    <h1>Letter Generator</h1>
     <form id="letterForm">
-      <label>Logo Perusahaan</label>
+      <label>Letter Logo</label>
       <input type="file" id="letterLogo" accept="image/*">
 
-      <label>Nomor Surat</label>
+      <label>Letter Head</label>
+      <input type="text" id="letterHead">
+
+      <!-- <label>Letter Number</label>
       <input type="text" id="letterNumber" placeholder="001/ABC/2025">
 
       <label>Tanggal</label>
@@ -25,12 +28,11 @@
       <input type="text" id="letterTitle" placeholder="Judul Surat">
 
       <label>Isi Surat</label>
-      <textarea id="letterBody" rows="5" placeholder="Tulis isi surat di sini..."></textarea>
+      <textarea id="letterBody" rows="5" placeholder="Tulis isi surat di sini..."></textarea> -->
     </form>
 
     <div class="actions">
       <button id="downloadPDF">Download PDF</button>
-      <button id="generateBase64">Generate Base64</button>
     </div>
 
     <h2>Preview</h2>
