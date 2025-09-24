@@ -61,7 +61,7 @@
 
     .container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 70% 30%;
       gap: 25px;
       max-width: 1400px;
       margin: 0 auto;
@@ -1421,6 +1421,7 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         
         let tableHTML = '';
         let hasItems = false;
+        let currentKategori = '';
         let itemNumber = 1;
         
         // Loop through all rows in table
@@ -1433,6 +1434,8 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
                 
                 if (kategoriValue) {
                     hasItems = true;
+                    currentKategori = kategoriValue;
+                    itemNumber = 1; // Reset item number untuk setiap kategori baru
                     
                     // Format kategori dengan styling yang sesuai
                     let formattedKategori = kategoriValue;
@@ -1444,14 +1447,13 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
                     
                     tableHTML += `
                         <tr>
-                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${itemNumber}</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">-</td>
                             <td style="border: 1px solid #2d3748; padding: 8px;">${formattedKategori}</td>
                             <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">-</td>
                             <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">-</td>
                             <td style="border: 1px solid #2d3748; padding: 8px; font-style: italic;">-</td>
                         </tr>
                     `;
-                    itemNumber++;
                 }
             } else if (row.classList.contains('item-row')) {
                 const itemInput = row.querySelector('.item-input');
@@ -1851,5 +1853,5 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         }
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98447352c5985fe5',t:'MTc1ODczOTY0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'984480ea92eb1e93',t:'MTc1ODc0MDIwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
