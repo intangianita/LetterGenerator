@@ -265,16 +265,23 @@
 
     .header-top {
       display: grid;
-      grid-template-columns: 120px 1fr 200px;
+      grid-template-columns: 1fr 1fr 200px;
       gap: 20px;
       align-items: start;
       margin-bottom: 20px;
+    }
+
+    .left-section {
+      display: flex;
+      align-items: start;
+      gap: 15px;
     }
 
     .logo-section {
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-shrink: 0;
     }
 
     .logo-section img {
@@ -284,7 +291,8 @@
     }
 
     .company-info {
-      text-align: center;
+      text-align: left;
+      flex: 1;
     }
 
     .company-info h1 {
@@ -300,9 +308,19 @@
       margin-bottom: 4px;
     }
 
+    .center-section {
+      /* Intentionally empty - creates space in the middle */
+    }
+
+    .right-section {
+      display: flex;
+      justify-content: flex-end;
+    }
+
     .color-legend {
       font-size: 0.85rem;
       color: #4a5568;
+      text-align: left;
     }
 
     .color-legend div {
@@ -489,8 +507,22 @@
       
       .header-top {
         grid-template-columns: 1fr;
-        text-align: center;
         gap: 15px;
+      }
+      
+      .left-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+      }
+      
+      .company-info {
+        text-align: center;
+      }
+      
+      .right-section {
+        justify-content: center;
       }
       
       .action-buttons {
@@ -635,34 +667,73 @@
         <div class="form-group-section collapsible">
           <h3 onclick="toggleSection('warna')" class="collapsible-header">
             <i class="fas fa-palette"></i> 
-            Keterangan Warna
+            Keterangan Warna Amplop
             <i class="fas fa-chevron-down toggle-icon" id="warna-icon"></i>
           </h3>
           
           <div class="collapsible-content" id="warna-content">
-            <div class="form-group">
-              <label for="keteranganPutih">
-                <i class="fas fa-circle" style="color: white; text-shadow: 0 0 1px #000;"></i>
-                Keterangan Putih
-              </label>
-              <input type="text" id="keteranganPutih" placeholder="Putih : Penerima Barang">
+            <div id="warnaContainer">
+              <div class="warna-item" data-index="0">
+                <div class="form-row" style="align-items: end; gap: 10px;">
+                  <div class="form-group" style="margin-bottom: 10px; flex: 0 0 120px;">
+                    <label>
+                      <i class="fas fa-palette"></i>
+                      Nama Warna
+                    </label>
+                    <input type="text" value="Putih" placeholder="Contoh: Putih" style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px;" onchange="updateWarnaPreview()">
+                  </div>
+                  <div class="form-group" style="margin-bottom: 10px; flex: 1;">
+                    <label>
+                      <i class="fas fa-tag"></i>
+                      Keterangan/Peruntukan
+                    </label>
+                    <input type="text" value="Penerima Barang" placeholder="Contoh: Penerima Barang" style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px;" onchange="updateWarnaPreview()">
+                  </div>
+                  <div style="flex: 0 0 40px; margin-bottom: 10px;">
+                    <button type="button" onclick="removeWarnaItem(this)" style="width: 40px; height: 45px; background: #f56565; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                      <i class="fas fa-trash" style="font-size: 14px;"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="warna-item" data-index="1">
+                <div class="form-row" style="align-items: end; gap: 10px;">
+                  <div class="form-group" style="margin-bottom: 10px; flex: 0 0 120px;">
+                    <input type="text" value="Merah" placeholder="Contoh: Merah" style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px;" onchange="updateWarnaPreview()">
+                  </div>
+                  <div class="form-group" style="margin-bottom: 10px; flex: 1;">
+                    <input type="text" value="Satpam" placeholder="Contoh: Satpam" style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px;" onchange="updateWarnaPreview()">
+                  </div>
+                  <div style="flex: 0 0 40px; margin-bottom: 10px;">
+                    <button type="button" onclick="removeWarnaItem(this)" style="width: 40px; height: 45px; background: #f56565; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                      <i class="fas fa-trash" style="font-size: 14px;"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="warna-item" data-index="2">
+                <div class="form-row" style="align-items: end; gap: 10px;">
+                  <div class="form-group" style="margin-bottom: 10px; flex: 0 0 120px;">
+                    <input type="text" value="Kuning" placeholder="Contoh: Kuning" style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px;" onchange="updateWarnaPreview()">
+                  </div>
+                  <div class="form-group" style="margin-bottom: 10px; flex: 1;">
+                    <input type="text" value="Arsip" placeholder="Contoh: Arsip" style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px;" onchange="updateWarnaPreview()">
+                  </div>
+                  <div style="flex: 0 0 40px; margin-bottom: 10px;">
+                    <button type="button" onclick="removeWarnaItem(this)" style="width: 40px; height: 45px; background: #f56565; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                      <i class="fas fa-trash" style="font-size: 14px;"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <div class="form-group">
-              <label for="keteranganMerah">
-                <i class="fas fa-circle" style="color: red;"></i>
-                Keterangan Merah
-              </label>
-              <input type="text" id="keteranganMerah" placeholder="Merah : Satpam">
-            </div>
-
-            <div class="form-group">
-              <label for="keteranganKuning">
-                <i class="fas fa-circle" style="color: gold;"></i>
-                Keterangan Kuning
-              </label>
-              <input type="text" id="keteranganKuning" placeholder="Kuning : Arsip">
-            </div>
+            
+            <button type="button" onclick="addWarnaItem()" style="margin-top: 15px; padding: 12px 20px; background: #667eea; color: white; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="fas fa-plus"></i>
+              Tambah Keterangan Warna
+            </button>
           </div>
         </div>
 
@@ -675,12 +746,22 @@
           </h3>
           
           <div class="collapsible-content" id="info-content">
-            <div class="form-group">
-              <label for="tanggalSurat">
-                <i class="fas fa-calendar-alt"></i>
-                Tanggal Surat
-              </label>
-              <input type="date" id="tanggalSurat">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="tempatSurat">
+                  <i class="fas fa-map-marker-alt"></i>
+                  Tempat Surat
+                </label>
+                <input type="text" id="tempatSurat" placeholder="Jakarta">
+              </div>
+              
+              <div class="form-group">
+                <label for="tanggalSurat">
+                  <i class="fas fa-calendar-alt"></i>
+                  Tanggal Surat
+                </label>
+                <input type="date" id="tanggalSurat">
+              </div>
             </div>
 
           <div class="form-group">
@@ -726,10 +807,95 @@
           <div class="form-group">
             <label for="detailSurat">
               <i class="fas fa-align-left"></i>
-              Isi Surat
+              Isi Surat (Pembuka)
             </label>
-            <textarea id="detailSurat" rows="6" placeholder="Tulis isi surat di sini..."></textarea>
+            <textarea id="detailSurat" rows="3" placeholder="Barang-barang milik Perusahaan A, sebagai berikut:"></textarea>
           </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fas fa-table"></i>
+              Tabel Daftar Barang
+            </label>
+            <div style="overflow-x: auto; border: 2px solid #e2e8f0; border-radius: 10px;">
+              <table id="barangTable" style="width: 100%; border-collapse: collapse; background: white;">
+                <thead>
+                  <tr style="background: #f8fafc;">
+                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; width: 50px; vertical-align: middle;">No</th>
+                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; vertical-align: middle;">Nama Barang</th>
+                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; width: 100px; vertical-align: middle;">Satuan</th>
+                    <th colspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; width: 160px;">Jumlah</th>
+                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; width: 60px; vertical-align: middle;">Aksi</th>
+                  </tr>
+                  <tr style="background: #f8fafc;">
+                    <th style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600; width: 80px;">Angka</th>
+                    <th style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600; width: 80px;">Huruf</th>
+                  </tr>
+                </thead>
+                <tbody id="barangTableBody">
+                  <tr class="barang-row">
+                    <td style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600;">1</td>
+                    <td style="border: 1px solid #e2e8f0; padding: 8px;">
+                      <input type="text" placeholder="Nama barang..." style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateBarangPreview()">
+                    </td>
+                    <td style="border: 1px solid #e2e8f0; padding: 8px;">
+                      <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateBarangPreview()">
+                    </td>
+                    <td style="border: 1px solid #e2e8f0; padding: 8px;">
+                      <input type="number" placeholder="0" style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateTerbilang(this); updateBarangPreview()">
+                    </td>
+                    <td style="border: 1px solid #e2e8f0; padding: 8px;">
+                      <input type="text" placeholder="Terbilang..." style="width: 100%; border: none; padding: 4px; background: transparent; font-style: italic;" readonly>
+                    </td>
+                    <td style="border: 1px solid #e2e8f0; padding: 8px; text-align: center;">
+                      <button type="button" onclick="removeBarangRow(this)" style="padding: 4px 8px; background: #f56565; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button type="button" onclick="addBarangRow()" style="margin-top: 10px; padding: 10px 15px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-plus"></i>
+              Tambah Baris
+            </button>
+          </div>
+          </div>
+        </div>
+
+        <!-- Keterangan Kendaraan -->
+        <div class="form-group-section collapsible">
+          <h3 onclick="toggleSection('kendaraan')" class="collapsible-header">
+            <i class="fas fa-car"></i> 
+            Keterangan Kendaraan
+            <i class="fas fa-chevron-down toggle-icon" id="kendaraan-icon"></i>
+          </h3>
+          
+          <div class="collapsible-content" id="kendaraan-content">
+            <div class="form-group">
+              <label for="jenisKendaraan">
+                <i class="fas fa-truck"></i>
+                Kendaraan
+              </label>
+              <input type="text" id="jenisKendaraan" placeholder="Contoh: Truk Box, Mobil Pick Up, dll" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+              <label for="platNomor">
+                <i class="fas fa-id-card"></i>
+                Plat Pol
+              </label>
+              <input type="text" id="platNomor" placeholder="Contoh: B 1234 ABC" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+              <label for="namaPengemudi">
+                <i class="fas fa-user-tie"></i>
+                Pengemudi
+              </label>
+              <input type="text" id="namaPengemudi" placeholder="Nama pengemudi" onchange="updatePreview()">
+            </div>
           </div>
         </div>
 
@@ -818,24 +984,42 @@
           <!-- Header Surat -->
           <div class="letter-header">
             <div class="header-top">
-              <!-- Logo -->
-              <div class="logo-section" id="logoSection">
-                <img id="previewLogo" style="display: none;">
-                <div id="logoPlaceholder" style="width: 100px; height: 80px; border: 2px dashed #e2e8f0; display: flex; align-items: center; justify-content: center; color: #a0aec0; font-size: 12px; text-align: center;">Logo<br>Perusahaan</div>
-              </div>
-              
-              <!-- Kop Surat -->
-              <div class="company-info">
-                <div id="prevIsiKopSurat" style="white-space: pre-line;">PT. NAMA PERUSAHAAN
+              <!-- Bagian Kiri: Logo dan Kop Surat -->
+              <div class="left-section">
+                <div class="logo-section" id="logoSection">
+                  <img id="previewLogo" style="display: none;">
+                  <div id="logoPlaceholder" style="width: 100px; height: 80px; border: 2px dashed #e2e8f0; display: flex; align-items: center; justify-content: center; color: #a0aec0; font-size: 12px; text-align: center;">Logo<br>Perusahaan</div>
+                </div>
+                
+                <!-- Kop Surat -->
+                <div class="company-info">
+                  <div id="prevIsiKopSurat" style="white-space: pre-line;">PT. NAMA PERUSAHAAN
 Alamat Perusahaan, Kota, Kode Pos
 Telp: (021) 1234567 | Email: info@perusahaan.com</div>
+                </div>
               </div>
               
-              <!-- Keterangan Warna -->
-              <div class="color-legend">
-                <div id="prevKeteranganPutih">Putih : Penerima Barang</div>
-                <div id="prevKeteranganMerah">Merah : Satpam</div>
-                <div id="prevKeteranganKuning">Kuning : Arsip</div>
+              <!-- Bagian Tengah: Kosong -->
+              <div class="center-section">
+                <!-- Intentionally empty -->
+              </div>
+              
+              <!-- Bagian Kanan: Keterangan Warna -->
+              <div class="right-section">
+                <div class="color-legend" id="prevColorLegend">
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-weight: 600; color: #4a5568;">Putih:</span>
+                    <span>Penerima Barang</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-weight: 600; color: #4a5568;">Merah:</span>
+                    <span>Satpam</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-weight: 600; color: #4a5568;">Kuning:</span>
+                    <span>Arsip</span>
+                  </div>
+                </div>
               </div>
             </div>
             <hr class="header-line">
@@ -875,13 +1059,38 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
             <div class="letter-content" id="prevDetail">
               <p>Silakan isi form untuk melihat preview surat...</p>
             </div>
+            <div id="prevBarangTable" style="margin-top: 15px;">
+              <table style="width: 100%; border-collapse: collapse; border: 2px solid #2d3748;">
+                <thead>
+                  <tr style="background: #f8fafc;">
+                    <th rowspan="2" style="border: 1px solid #2d3748; padding: 8px; text-align: center; font-weight: 600; width: 40px; vertical-align: middle;">No</th>
+                    <th rowspan="2" style="border: 1px solid #2d3748; padding: 8px; text-align: center; font-weight: 600; vertical-align: middle;">Nama Barang</th>
+                    <th rowspan="2" style="border: 1px solid #2d3748; padding: 8px; text-align: center; font-weight: 600; width: 80px; vertical-align: middle;">Satuan</th>
+                    <th colspan="2" style="border: 1px solid #2d3748; padding: 8px; text-align: center; font-weight: 600;">Jumlah</th>
+                  </tr>
+                  <tr style="background: #f8fafc;">
+                    <th style="border: 1px solid #2d3748; padding: 6px; text-align: center; font-weight: 600; width: 60px;">Angka</th>
+                    <th style="border: 1px solid #2d3748; padding: 6px; text-align: center; font-weight: 600;">Huruf</th>
+                  </tr>
+                </thead>
+                <tbody id="prevBarangTableBody">
+                  <tr>
+                    <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">1</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">Nama barang akan muncul di sini...</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; color: #a0aec0;">-</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; color: #a0aec0;">-</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">-</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <!-- Tanda Tangan -->
           <div class="signature-section">
             <!-- Tanggal di atas tanda tangan kepala gudang -->
             <div class="signature-date">
-              <p id="signatureDate">Jakarta, <span id="prevTanggalTtd">-</span></p>
+              <p id="signatureDate"><span id="prevTempatTtd">Jakarta</span>, <span id="prevTanggalTtd">-</span></p>
             </div>
             
             <div class="signature-block">
@@ -891,6 +1100,13 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
                   <img id="prevTtdMenerima" class="signature-img" style="display: none;">
                 </div>
                 <p class="signature-name" id="prevNamaMenerima">( _________________ )</p>
+                
+                <!-- Keterangan Kendaraan -->
+                <div style="margin-top: 20px; text-align: left; font-size: 0.9rem; line-height: 1.4;">
+                  <p style="margin-bottom: 4px;">Kendaraan : <span id="prevJenisKendaraan">Jenis Kendaraan</span></p>
+                  <p style="margin-bottom: 4px;">Plat Pol : <span id="prevPlatNomor">A XXXX Z</span></p>
+                  <p style="margin-bottom: 4px;">Pengemudi : <span id="prevNamaPengemudi">Nama Pengemudi</span></p>
+                </div>
               </div>
               
               <div class="signature-item">
@@ -936,9 +1152,21 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         inputs.forEach(input => {
             input.addEventListener('input', updatePreview);
         });
+
+        // Add event listener untuk input barang pertama
+        const firstBarangInputs = document.querySelectorAll('.barang-row input');
+        firstBarangInputs.forEach(input => {
+            if (input.type === 'number') {
+                input.addEventListener('input', function() {
+                    updateTerbilang(this);
+                    updateBarangPreview();
+                });
+            } else {
+                input.addEventListener('input', updateBarangPreview);
+            }
+        });
         
-        // Buka section informasi dasar secara default
-        toggleSection('info');
+        // Section informasi dasar tidak dibuka secara default
         
         // Initial preview
         updatePreview();
@@ -960,19 +1188,22 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
     function updatePreview() {
         // Ambil nilai dari form
         const isiKopSurat = document.getElementById('isiKopSurat').value || 'PT. NAMA PERUSAHAAN\nAlamat Perusahaan, Kota, Kode Pos\nTelp: (021) 1234567 | Email: info@perusahaan.com';
-        const keteranganPutih = document.getElementById('keteranganPutih').value || 'Putih : Penerima Barang';
-        const keteranganMerah = document.getElementById('keteranganMerah').value || 'Merah : Satpam';
-        const keteranganKuning = document.getElementById('keteranganKuning').value || 'Kuning : Arsip';
         const judulSurat = document.getElementById('judulSurat').value || 'JUDUL SURAT';
+        const tempatSurat = document.getElementById('tempatSurat').value || 'Jakarta';
         const tanggalSurat = document.getElementById('tanggalSurat').value;
         const diberikanKepada = document.getElementById('diberikanKepada').value || '-';
         const kodeNo = document.getElementById('kodeNo').value || '-';
         const pekerjaanProyek = document.getElementById('pekerjaanProyek').value || '-';
         const lokasi = document.getElementById('lokasi').value || '-';
-        const detailSurat = document.getElementById('detailSurat').value || 'Silakan isi form untuk melihat preview surat...';
+        const detailSurat = document.getElementById('detailSurat').value || 'Barang-barang milik Perusahaan A, sebagai berikut:';
         const namaMenerima = document.getElementById('namaMenerima').value || '_________________';
         const namaSatpam = document.getElementById('namaSatpam').value || '_________________';
         const namaGudang = document.getElementById('namaGudang').value || '_________________';
+        
+        // Ambil data kendaraan
+        const jenisKendaraan = document.getElementById('jenisKendaraan').value || 'Jenis Kendaraan';
+        const platNomor = document.getElementById('platNomor').value || 'A XXXX Z';
+        const namaPengemudi = document.getElementById('namaPengemudi').value || 'Nama Pengemudi';
 
         // Format tanggal
         let formattedDate = '-';
@@ -988,9 +1219,9 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
 
         // Update preview kop surat
         document.getElementById('prevIsiKopSurat').textContent = isiKopSurat;
-        document.getElementById('prevKeteranganPutih').textContent = keteranganPutih;
-        document.getElementById('prevKeteranganMerah').textContent = keteranganMerah;
-        document.getElementById('prevKeteranganKuning').textContent = keteranganKuning;
+        
+        // Update keterangan warna
+        updateWarnaPreview();
 
         // Update preview
         document.getElementById('prevJudulSurat').textContent = judulSurat.toUpperCase();
@@ -1003,13 +1234,22 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         const formattedDetail = detailSurat.replace(/\n/g, '</p><p>');
         document.getElementById('prevDetail').innerHTML = `<p>${formattedDetail}</p>`;
         
+        // Update daftar barang
+        updateBarangPreview();
+        
         // Update nama-nama
         document.getElementById('prevNamaMenerima').textContent = `( ${namaMenerima} )`;
         document.getElementById('prevNamaSatpam').textContent = `( ${namaSatpam} )`;
         document.getElementById('prevNamaGudang').textContent = `( ${namaGudang} )`;
 
-        // Update tanggal untuk tanda tangan
+        // Update tempat dan tanggal untuk tanda tangan
+        document.getElementById('prevTempatTtd').textContent = tempatSurat;
         document.getElementById('prevTanggalTtd').textContent = formattedDate;
+        
+        // Update keterangan kendaraan
+        document.getElementById('prevJenisKendaraan').textContent = jenisKendaraan;
+        document.getElementById('prevPlatNomor').textContent = platNomor;
+        document.getElementById('prevNamaPengemudi').textContent = namaPengemudi;
 
         // Animasi update
         const previewContent = document.getElementById('previewContent');
@@ -1021,6 +1261,148 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
             previewContent.style.opacity = '1';
             previewContent.style.transition = 'all 0.3s ease';
         }, 100);
+    }
+
+    function addBarangRow() {
+        const tableBody = document.getElementById('barangTableBody');
+        const rowCount = tableBody.children.length + 1;
+        
+        const newRow = document.createElement('tr');
+        newRow.className = 'barang-row';
+        
+        newRow.innerHTML = `
+            <td style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600;">${rowCount}</td>
+            <td style="border: 1px solid #e2e8f0; padding: 8px;">
+                <input type="text" placeholder="Nama barang..." style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateBarangPreview()">
+            </td>
+            <td style="border: 1px solid #e2e8f0; padding: 8px;">
+                <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateBarangPreview()">
+            </td>
+            <td style="border: 1px solid #e2e8f0; padding: 8px;">
+                <input type="number" placeholder="0" style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateTerbilang(this); updateBarangPreview()">
+            </td>
+            <td style="border: 1px solid #e2e8f0; padding: 8px;">
+                <input type="text" placeholder="Terbilang..." style="width: 100%; border: none; padding: 4px; background: transparent; font-style: italic;" readonly>
+            </td>
+            <td style="border: 1px solid #e2e8f0; padding: 8px; text-align: center;">
+                <button type="button" onclick="removeBarangRow(this)" style="padding: 4px 8px; background: #f56565; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        `;
+        
+        tableBody.appendChild(newRow);
+        updateBarangRowNumbers();
+        updateBarangPreview();
+        
+        // Focus pada input nama barang baru
+        newRow.querySelector('input[type="text"]').focus();
+    }
+
+    function removeBarangRow(button) {
+        const tableBody = document.getElementById('barangTableBody');
+        if (tableBody.children.length > 1) {
+            button.closest('tr').remove();
+            updateBarangRowNumbers();
+            updateBarangPreview();
+        } else {
+            showNotification('Minimal harus ada 1 baris barang!', 'error');
+        }
+    }
+
+    function updateBarangRowNumbers() {
+        const barangRows = document.querySelectorAll('.barang-row');
+        barangRows.forEach((row, index) => {
+            const numberCell = row.querySelector('td:first-child');
+            numberCell.textContent = index + 1;
+        });
+    }
+
+    function updateTerbilang(numberInput) {
+        const row = numberInput.closest('tr');
+        const terbilangInput = row.querySelector('td:nth-child(5) input');
+        const number = parseInt(numberInput.value) || 0;
+        
+        if (number > 0) {
+            terbilangInput.value = numberToWords(number);
+        } else {
+            terbilangInput.value = '';
+        }
+    }
+
+    function numberToWords(num) {
+        const ones = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan'];
+        const teens = ['sepuluh', 'sebelas', 'dua belas', 'tiga belas', 'empat belas', 'lima belas', 'enam belas', 'tujuh belas', 'delapan belas', 'sembilan belas'];
+        const tens = ['', '', 'dua puluh', 'tiga puluh', 'empat puluh', 'lima puluh', 'enam puluh', 'tujuh puluh', 'delapan puluh', 'sembilan puluh'];
+        
+        if (num === 0) return 'nol';
+        if (num < 10) return ones[num];
+        if (num < 20) return teens[num - 10];
+        if (num < 100) {
+            return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + ones[num % 10] : '');
+        }
+        if (num < 1000) {
+            const hundreds = Math.floor(num / 100);
+            const remainder = num % 100;
+            let result = (hundreds === 1 ? 'seratus' : ones[hundreds] + ' ratus');
+            if (remainder !== 0) {
+                result += ' ' + numberToWords(remainder);
+            }
+            return result;
+        }
+        if (num < 1000000) {
+            const thousands = Math.floor(num / 1000);
+            const remainder = num % 1000;
+            let result = (thousands === 1 ? 'seribu' : numberToWords(thousands) + ' ribu');
+            if (remainder !== 0) {
+                result += ' ' + numberToWords(remainder);
+            }
+            return result;
+        }
+        
+        return num.toString(); // Fallback untuk angka yang sangat besar
+    }
+
+    function updateBarangPreview() {
+        const barangRows = document.querySelectorAll('.barang-row');
+        const prevTableBody = document.getElementById('prevBarangTableBody');
+        
+        let tableHTML = '';
+        let hasItems = false;
+        
+        barangRows.forEach((row, index) => {
+            const namaBarang = row.querySelector('td:nth-child(2) input').value.trim();
+            const satuan = row.querySelector('td:nth-child(3) input').value.trim();
+            const jumlah = row.querySelector('td:nth-child(4) input').value.trim();
+            const terbilang = row.querySelector('td:nth-child(5) input').value.trim();
+            
+            if (namaBarang || satuan || jumlah) {
+                hasItems = true;
+                tableHTML += `
+                    <tr>
+                        <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${index + 1}</td>
+                        <td style="border: 1px solid #2d3748; padding: 8px;">${namaBarang || '-'}</td>
+                        <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${satuan || '-'}</td>
+                        <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${jumlah || '-'}</td>
+                        <td style="border: 1px solid #2d3748; padding: 8px; font-style: italic;">${terbilang || '-'}</td>
+                    </tr>
+                `;
+            }
+        });
+        
+        if (!hasItems) {
+            tableHTML = `
+                <tr>
+                    <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">1</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">Nama barang akan muncul di sini...</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; color: #a0aec0;">-</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; color: #a0aec0;">-</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">-</td>
+                </tr>
+            `;
+        }
+        
+        prevTableBody.innerHTML = tableHTML;
     }
 
     // Fungsi upload logo perusahaan
@@ -1086,7 +1468,7 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
 
     function downloadPDF() {
         // Validasi form
-        const requiredFields = ['judulSurat', 'tanggalSurat', 'diberikanKepada', 'detailSurat'];
+        const requiredFields = ['judulSurat', 'tempatSurat', 'tanggalSurat', 'diberikanKepada', 'detailSurat'];
         const emptyFields = [];
         
         requiredFields.forEach(fieldId => {
@@ -1213,6 +1595,93 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         }, 3000);
     }
 
+    // Fungsi untuk keterangan warna dinamis
+    function addWarnaItem() {
+        const container = document.getElementById('warnaContainer');
+        const itemCount = container.children.length;
+        
+        const newItem = document.createElement('div');
+        newItem.className = 'warna-item';
+        newItem.setAttribute('data-index', itemCount);
+        
+        newItem.innerHTML = `
+            <div class="form-row" style="align-items: end; gap: 10px;">
+              <div class="form-group" style="margin-bottom: 10px; flex: 0 0 120px;">
+                ${itemCount === 0 ? '<label><i class="fas fa-palette"></i> Nama Warna</label>' : ''}
+                <input type="text" placeholder="Contoh: Biru" style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px;" onchange="updateWarnaPreview()">
+              </div>
+              <div class="form-group" style="margin-bottom: 10px; flex: 1;">
+                ${itemCount === 0 ? '<label><i class="fas fa-tag"></i> Keterangan/Peruntukan</label>' : ''}
+                <input type="text" placeholder="Contoh: Keterangan warna..." style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px;" onchange="updateWarnaPreview()">
+              </div>
+              <div style="flex: 0 0 40px; margin-bottom: 10px;">
+                <button type="button" onclick="removeWarnaItem(this)" style="width: 40px; height: 45px; background: #f56565; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                  <i class="fas fa-trash" style="font-size: 14px;"></i>
+                </button>
+              </div>
+            </div>
+        `;
+        
+        container.appendChild(newItem);
+        updateWarnaPreview();
+        
+        // Focus pada input keterangan baru
+        newItem.querySelector('input[type="text"]').focus();
+    }
+
+    function removeWarnaItem(button) {
+        const container = document.getElementById('warnaContainer');
+        if (container.children.length > 1) {
+            button.closest('.warna-item').remove();
+            updateWarnaPreview();
+        } else {
+            showNotification('Minimal harus ada 1 keterangan warna!', 'error');
+        }
+    }
+
+    function updateWarnaPreview() {
+        const warnaItems = document.querySelectorAll('.warna-item');
+        const prevColorLegend = document.getElementById('prevColorLegend');
+        
+        let legendHTML = '';
+        let hasItems = false;
+        
+        warnaItems.forEach((item, index) => {
+            const inputs = item.querySelectorAll('input[type="text"]');
+            const colorName = inputs[0] ? inputs[0].value.trim() : '';
+            const text = inputs[1] ? inputs[1].value.trim() : '';
+            
+            if (colorName && text) {
+                hasItems = true;
+                legendHTML += `
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <span style="font-weight: 600; color: #4a5568;">${colorName}:</span>
+                        <span>${text}</span>
+                    </div>
+                `;
+            }
+        });
+        
+        if (!hasItems) {
+            legendHTML = `
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-weight: 600; color: #4a5568;">Putih:</span>
+                    <span>Penerima Barang</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-weight: 600; color: #4a5568;">Merah:</span>
+                    <span>Satpam</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-weight: 600; color: #4a5568;">Kuning:</span>
+                    <span>Arsip</span>
+                </div>
+            `;
+        }
+        
+        prevColorLegend.innerHTML = legendHTML;
+    }
+
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
         // Ctrl/Cmd + Enter untuk preview
@@ -1228,5 +1697,5 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         }
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983c03e140937d50',t:'MTc1ODY1MTE5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98444653c369f9b3',t:'MTc1ODczNzgwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
