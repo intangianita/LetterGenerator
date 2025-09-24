@@ -833,23 +833,20 @@
                   </tr>
                 </thead>
                 <tbody id="barangTableBody">
-                  <tr class="barang-row">
+                  <tr class="kategori-row">
                     <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem;">1</td>
                     <td style="border: 1px solid #e2e8f0; padding: 6px;">
-                      <input type="text" class="kategori-input" placeholder="Kategori (contoh: Pasang Baru)" style="width: 100%; border: none; padding: 3px; background: transparent; margin-bottom: 3px; font-size: 0.85rem;" oninput="updateKategoriInput(this); updateBarangPreview()">
-                      <input type="text" class="item-input" placeholder="Item barang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
-                    </td>
-                    <td style="border: 1px solid #e2e8f0; padding: 6px;">
-                      <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
-                    </td>
-                    <td style="border: 1px solid #e2e8f0; padding: 6px;">
-                      <input type="number" placeholder="0" style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateTerbilang(this); updateBarangPreview()">
-                    </td>
-                    <td style="border: 1px solid #e2e8f0; padding: 6px;">
-                      <input type="text" placeholder="Terbilang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-style: italic; font-size: 0.8rem;" readonly>
+                      <input type="text" class="kategori-input" placeholder="Kategori (contoh: Pasang Baru)" style="width: 100%; border: none; padding: 3px; background: transparent; font-weight: 600; font-size: 0.9rem;" oninput="updateKategoriInput(this); updateBarangPreview()">
                     </td>
                     <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
-                      <button type="button" onclick="removeBarangRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                      <button type="button" onclick="addItemToKategori(this)" style="padding: 3px 8px; background: #48bb78; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                        <i class="fas fa-plus"></i> Item
+                      </button>
+                    </td>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px;"></td>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px;"></td>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
+                      <button type="button" onclick="removeKategoriRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                         <i class="fas fa-trash"></i>
                       </button>
                     </td>
@@ -857,9 +854,9 @@
                 </tbody>
               </table>
             </div>
-            <button type="button" onclick="addBarangRow()" style="margin-top: 10px; padding: 10px 15px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            <button type="button" onclick="addKategoriRow()" style="margin-top: 10px; padding: 10px 15px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
               <i class="fas fa-plus"></i>
-              Tambah Baris
+              Tambah Kategori
             </button>
           </div>
           </div>
@@ -1154,18 +1151,14 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
             input.addEventListener('input', updatePreview);
         });
 
-        // Add event listener untuk input barang pertama
-        const firstBarangInputs = document.querySelectorAll('.barang-row input');
-        firstBarangInputs.forEach(input => {
-            if (input.type === 'number') {
-                input.addEventListener('input', function() {
-                    updateTerbilang(this);
-                    updateBarangPreview();
-                });
-            } else {
-                input.addEventListener('input', updateBarangPreview);
-            }
-        });
+        // Add event listener untuk input kategori dan item pertama
+        const firstKategoriInput = document.querySelector('.kategori-row .kategori-input');
+        if (firstKategoriInput) {
+            firstKategoriInput.addEventListener('input', function() {
+                updateKategoriInput(this);
+                updateBarangPreview();
+            });
+        }
         
         // Section informasi dasar tidak dibuka secara default
         
@@ -1264,18 +1257,58 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         }, 100);
     }
 
-    function addBarangRow() {
+    function addKategoriRow() {
         const tableBody = document.getElementById('barangTableBody');
-        const rowCount = tableBody.children.length + 1;
+        const rowCount = getKategoriCount() + 1;
         
         const newRow = document.createElement('tr');
-        newRow.className = 'barang-row';
+        newRow.className = 'kategori-row';
         
         newRow.innerHTML = `
             <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem;">${rowCount}</td>
             <td style="border: 1px solid #e2e8f0; padding: 6px;">
-                <input type="text" class="kategori-input" placeholder="Kategori (contoh: Pasang Baru)" style="width: 100%; border: none; padding: 3px; background: transparent; margin-bottom: 3px; font-size: 0.85rem;" oninput="updateKategoriInput(this); updateBarangPreview()">
-                <input type="text" class="item-input" placeholder="Item barang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
+                <input type="text" class="kategori-input" placeholder="Kategori (contoh: Pasang Baru)" style="width: 100%; border: none; padding: 3px; background: transparent; font-weight: 600; font-size: 0.9rem;" oninput="updateKategoriInput(this); updateBarangPreview()">
+            </td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
+                <button type="button" onclick="addItemToKategori(this)" style="padding: 3px 8px; background: #48bb78; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                    <i class="fas fa-plus"></i> Item
+                </button>
+            </td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px;"></td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px;"></td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
+                <button type="button" onclick="removeKategoriRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        `;
+        
+        tableBody.appendChild(newRow);
+        updateBarangPreview();
+        
+        // Focus pada input kategori baru
+        newRow.querySelector('.kategori-input').focus();
+    }
+
+    function addItemToKategori(button) {
+        const kategoriRow = button.closest('tr');
+        const kategoriInput = kategoriRow.querySelector('.kategori-input');
+        const kategoriValue = kategoriInput.value.trim();
+        
+        if (!kategoriValue) {
+            showNotification('Isi kategori terlebih dahulu!', 'error');
+            kategoriInput.focus();
+            return;
+        }
+        
+        const newItemRow = document.createElement('tr');
+        newItemRow.className = 'item-row';
+        newItemRow.setAttribute('data-kategori', kategoriValue);
+        
+        newItemRow.innerHTML = `
+            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; color: #a0aec0;">•</td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px; padding-left: 20px;">
+                <input type="text" class="item-input" placeholder="Nama item barang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
             </td>
             <td style="border: 1px solid #e2e8f0; padding: 6px;">
                 <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
@@ -1287,34 +1320,51 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
                 <input type="text" placeholder="Terbilang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-style: italic; font-size: 0.8rem;" readonly>
             </td>
             <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
-                <button type="button" onclick="removeBarangRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                <button type="button" onclick="removeItemRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
         `;
         
-        tableBody.appendChild(newRow);
-        updateBarangRowNumbers();
+        // Insert setelah kategori row
+        kategoriRow.parentNode.insertBefore(newItemRow, kategoriRow.nextSibling);
         updateBarangPreview();
         
-        // Focus pada input kategori baru
-        newRow.querySelector('.kategori-input').focus();
+        // Focus pada input item baru
+        newItemRow.querySelector('.item-input').focus();
     }
 
-    function removeBarangRow(button) {
+    function removeKategoriRow(button) {
         const tableBody = document.getElementById('barangTableBody');
-        if (tableBody.children.length > 1) {
-            button.closest('tr').remove();
-            updateBarangRowNumbers();
+        const kategoriRow = button.closest('tr');
+        
+        if (tableBody.querySelectorAll('.kategori-row').length > 1) {
+            // Hapus semua item rows yang terkait dengan kategori ini
+            const kategoriValue = kategoriRow.querySelector('.kategori-input').value.trim();
+            const itemRows = tableBody.querySelectorAll(`.item-row[data-kategori="${kategoriValue}"]`);
+            itemRows.forEach(row => row.remove());
+            
+            // Hapus kategori row
+            kategoriRow.remove();
+            updateKategoriNumbers();
             updateBarangPreview();
         } else {
-            showNotification('Minimal harus ada 1 baris barang!', 'error');
+            showNotification('Minimal harus ada 1 kategori!', 'error');
         }
     }
 
-    function updateBarangRowNumbers() {
-        const barangRows = document.querySelectorAll('.barang-row');
-        barangRows.forEach((row, index) => {
+    function removeItemRow(button) {
+        button.closest('tr').remove();
+        updateBarangPreview();
+    }
+
+    function getKategoriCount() {
+        return document.querySelectorAll('.kategori-row').length;
+    }
+
+    function updateKategoriNumbers() {
+        const kategoriRows = document.querySelectorAll('.kategori-row');
+        kategoriRows.forEach((row, index) => {
             const numberCell = row.querySelector('td:first-child');
             numberCell.textContent = index + 1;
         });
@@ -1366,40 +1416,68 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
     }
 
     function updateBarangPreview() {
-        const barangRows = document.querySelectorAll('.barang-row');
+        const tableBody = document.getElementById('barangTableBody');
         const prevTableBody = document.getElementById('prevBarangTableBody');
         
         let tableHTML = '';
         let hasItems = false;
+        let itemNumber = 1;
         
-        barangRows.forEach((row, index) => {
-            const namaBarang = getBarangDisplayText(row);
-            const satuan = row.querySelector('td:nth-child(3) input').value.trim();
-            const jumlah = row.querySelector('td:nth-child(4) input').value.trim();
-            const terbilang = row.querySelector('td:nth-child(5) input').value.trim();
-            
-            if (namaBarang || satuan || jumlah) {
-                hasItems = true;
+        // Loop through all rows in table
+        const allRows = tableBody.querySelectorAll('tr');
+        
+        allRows.forEach((row) => {
+            if (row.classList.contains('kategori-row')) {
+                const kategoriInput = row.querySelector('.kategori-input');
+                const kategoriValue = kategoriInput ? kategoriInput.value.trim() : '';
                 
-                // Format nama barang dengan styling yang sesuai
-                let formattedNamaBarang = namaBarang || '-';
-                if (namaBarang) {
-                    if (namaBarang.includes('GANTI METER')) {
-                        formattedNamaBarang = `<strong style="text-transform: uppercase;">${namaBarang}</strong>`;
-                    } else if (namaBarang.includes('Pasang Baru') || namaBarang.includes('Perubahan Daya')) {
-                        formattedNamaBarang = `<strong>${namaBarang}</strong>`;
+                if (kategoriValue) {
+                    hasItems = true;
+                    
+                    // Format kategori dengan styling yang sesuai
+                    let formattedKategori = kategoriValue;
+                    if (kategoriValue.toUpperCase().includes('GANTI METER')) {
+                        formattedKategori = `<strong style="text-transform: uppercase;">${kategoriValue}</strong>`;
+                    } else {
+                        formattedKategori = `<strong>${kategoriValue}</strong>`;
                     }
+                    
+                    tableHTML += `
+                        <tr>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${itemNumber}</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px;">${formattedKategori}</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">-</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">-</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; font-style: italic;">-</td>
+                        </tr>
+                    `;
+                    itemNumber++;
                 }
+            } else if (row.classList.contains('item-row')) {
+                const itemInput = row.querySelector('.item-input');
+                const satuanInput = row.querySelector('td:nth-child(3) input');
+                const jumlahInput = row.querySelector('td:nth-child(4) input');
+                const terbilangInput = row.querySelector('td:nth-child(5) input');
                 
-                tableHTML += `
-                    <tr>
-                        <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${index + 1}</td>
-                        <td style="border: 1px solid #2d3748; padding: 8px;">${formattedNamaBarang}</td>
-                        <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${satuan || '-'}</td>
-                        <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${jumlah || '-'}</td>
-                        <td style="border: 1px solid #2d3748; padding: 8px; font-style: italic;">${terbilang || '-'}</td>
-                    </tr>
-                `;
+                const itemValue = itemInput ? itemInput.value.trim() : '';
+                const satuan = satuanInput ? satuanInput.value.trim() : '';
+                const jumlah = jumlahInput ? jumlahInput.value.trim() : '';
+                const terbilang = terbilangInput ? terbilangInput.value.trim() : '';
+                
+                if (itemValue || satuan || jumlah) {
+                    hasItems = true;
+                    
+                    tableHTML += `
+                        <tr>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${itemNumber}</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; padding-left: 20px;">${itemValue || '-'}</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${satuan || '-'}</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${jumlah || '-'}</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; font-style: italic;">${terbilang || '-'}</td>
+                        </tr>
+                    `;
+                    itemNumber++;
+                }
             }
         });
         
@@ -1407,7 +1485,7 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
             tableHTML = `
                 <tr>
                     <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">1</td>
-                    <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">Pilih kategori dan item barang...</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">Isi kategori dan tambah item barang...</td>
                     <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; color: #a0aec0;">-</td>
                     <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; color: #a0aec0;">-</td>
                     <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">-</td>
@@ -1756,23 +1834,7 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         }
     }
 
-    function getBarangDisplayText(row) {
-        const kategoriInput = row.querySelector('.kategori-input');
-        const itemInput = row.querySelector('.item-input');
-        
-        const kategoriValue = kategoriInput.value.trim();
-        const itemValue = itemInput.value.trim();
-        
-        if (!kategoriValue && !itemValue) return '';
-        
-        if (kategoriValue && itemValue) {
-            return `${kategoriValue} - ${itemValue}`;
-        } else if (kategoriValue) {
-            return kategoriValue;
-        } else {
-            return itemValue;
-        }
-    }
+
 
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
@@ -1789,5 +1851,5 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         }
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98446bc4769a5fe5',t:'MTc1ODczOTMzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98447352c5985fe5',t:'MTc1ODczOTY0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
