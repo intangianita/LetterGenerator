@@ -836,17 +836,8 @@
                   <tr class="barang-row">
                     <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem;">1</td>
                     <td style="border: 1px solid #e2e8f0; padding: 6px;">
-                      <select onchange="updateSubBarangOptions(this); updateBarangPreview()" style="width: 100%; border: none; padding: 3px; background: transparent; margin-bottom: 3px; font-size: 0.85rem;">
-                        <option value="">Pilih Kategori...</option>
-                        <option value="pasang_baru">Pasang Baru</option>
-                        <option value="perubahan_daya">Perubahan Daya</option>
-                        <option value="ganti_meter">GANTI METER</option>
-                        <option value="custom">Input Manual</option>
-                      </select>
-                      <select class="sub-barang-select" style="width: 100%; border: none; padding: 3px; background: transparent; display: none; font-size: 0.85rem;" onchange="updateBarangPreview()">
-                        <option value="">Pilih Item...</option>
-                      </select>
-                      <input type="text" class="custom-barang-input" placeholder="Ketik nama barang..." style="width: 100%; border: none; padding: 3px; background: transparent; display: none; font-size: 0.85rem;" oninput="updateBarangPreview()">
+                      <input type="text" class="kategori-input" placeholder="Kategori (contoh: Pasang Baru)" style="width: 100%; border: none; padding: 3px; background: transparent; margin-bottom: 3px; font-size: 0.85rem;" oninput="updateKategoriInput(this); updateBarangPreview()">
+                      <input type="text" class="item-input" placeholder="Item barang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
                     </td>
                     <td style="border: 1px solid #e2e8f0; padding: 6px;">
                       <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
@@ -1283,17 +1274,8 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         newRow.innerHTML = `
             <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem;">${rowCount}</td>
             <td style="border: 1px solid #e2e8f0; padding: 6px;">
-                <select onchange="updateSubBarangOptions(this); updateBarangPreview()" style="width: 100%; border: none; padding: 3px; background: transparent; margin-bottom: 3px; font-size: 0.85rem;">
-                    <option value="">Pilih Kategori...</option>
-                    <option value="pasang_baru">Pasang Baru</option>
-                    <option value="perubahan_daya">Perubahan Daya</option>
-                    <option value="ganti_meter">GANTI METER</option>
-                    <option value="custom">Input Manual</option>
-                </select>
-                <select class="sub-barang-select" style="width: 100%; border: none; padding: 3px; background: transparent; display: none; font-size: 0.85rem;" onchange="updateBarangPreview()">
-                    <option value="">Pilih Item...</option>
-                </select>
-                <input type="text" class="custom-barang-input" placeholder="Ketik nama barang..." style="width: 100%; border: none; padding: 3px; background: transparent; display: none; font-size: 0.85rem;" oninput="updateBarangPreview()">
+                <input type="text" class="kategori-input" placeholder="Kategori (contoh: Pasang Baru)" style="width: 100%; border: none; padding: 3px; background: transparent; margin-bottom: 3px; font-size: 0.85rem;" oninput="updateKategoriInput(this); updateBarangPreview()">
+                <input type="text" class="item-input" placeholder="Item barang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
             </td>
             <td style="border: 1px solid #e2e8f0; padding: 6px;">
                 <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
@@ -1315,8 +1297,8 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         updateBarangRowNumbers();
         updateBarangPreview();
         
-        // Focus pada input nama barang baru
-        newRow.querySelector('input[type="text"]').focus();
+        // Focus pada input kategori baru
+        newRow.querySelector('.kategori-input').focus();
     }
 
     function removeBarangRow(button) {
@@ -1713,9 +1695,17 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         prevColorLegend.innerHTML = legendHTML;
     }
 
-    // Data untuk dropdown barang
-    const barangData = {
-        pasang_baru: [
+    // Data untuk saran kategori dan item
+    const kategoriSuggestions = [
+        'Pasang Baru',
+        'Perubahan Daya', 
+        'GANTI METER',
+        'Perbaikan',
+        'Maintenance'
+    ];
+
+    const itemSuggestions = {
+        'pasang baru': [
             'kWh Meter',
             'MCB 2A',
             'MCB 4A', 
@@ -1726,7 +1716,7 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
             'Box MCB',
             'Terminal Block'
         ],
-        perubahan_daya: [
+        'perubahan daya': [
             'MBCB 4A',
             'MBCB 6A',
             'MBCB 10A',
@@ -1737,7 +1727,7 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
             'Kabel NYM 2x6',
             'Terminal Upgrade'
         ],
-        ganti_meter: [
+        'ganti meter': [
             'kWh Meter LPB',
             'kWh Meter Prabayar',
             'kWh Meter Digital',
@@ -1748,71 +1738,39 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         ]
     };
 
-    function updateSubBarangOptions(categorySelect) {
-        const row = categorySelect.closest('tr');
-        const subSelect = row.querySelector('.sub-barang-select');
-        const customInput = row.querySelector('.custom-barang-input');
-        const category = categorySelect.value;
+    function updateKategoriInput(input) {
+        const row = input.closest('tr');
+        const itemInput = row.querySelector('.item-input');
+        const kategoriValue = input.value.toLowerCase().trim();
         
-        // Clear existing options
-        subSelect.innerHTML = '<option value="">Pilih Item...</option>';
-        
-        if (category === 'custom') {
-            // Show custom input, hide dropdown
-            subSelect.style.display = 'none';
-            customInput.style.display = 'block';
-            customInput.focus();
-        } else if (category && barangData[category]) {
-            // Show sub dropdown, hide custom input
-            subSelect.style.display = 'block';
-            customInput.style.display = 'none';
-            
-            // Add options
-            barangData[category].forEach(item => {
-                const option = document.createElement('option');
-                option.value = item;
-                option.textContent = item;
-                subSelect.appendChild(option);
-            });
+        // Update placeholder item input berdasarkan kategori
+        if (kategoriValue) {
+            const suggestions = itemSuggestions[kategoriValue];
+            if (suggestions && suggestions.length > 0) {
+                itemInput.placeholder = `Contoh: ${suggestions[0]}, ${suggestions[1] || 'dll'}...`;
+            } else {
+                itemInput.placeholder = 'Item barang...';
+            }
         } else {
-            // Hide both
-            subSelect.style.display = 'none';
-            customInput.style.display = 'none';
+            itemInput.placeholder = 'Item barang...';
         }
     }
 
     function getBarangDisplayText(row) {
-        const categorySelect = row.querySelector('select:first-of-type');
-        const subSelect = row.querySelector('.sub-barang-select');
-        const customInput = row.querySelector('.custom-barang-input');
+        const kategoriInput = row.querySelector('.kategori-input');
+        const itemInput = row.querySelector('.item-input');
         
-        const categoryValue = categorySelect.value;
-        const subValue = subSelect.value;
-        const customValue = customInput.value.trim();
+        const kategoriValue = kategoriInput.value.trim();
+        const itemValue = itemInput.value.trim();
         
-        if (!categoryValue) return '';
+        if (!kategoriValue && !itemValue) return '';
         
-        if (categoryValue === 'custom') {
-            return customValue || '';
-        }
-        
-        let categoryText = '';
-        switch(categoryValue) {
-            case 'pasang_baru':
-                categoryText = 'Pasang Baru';
-                break;
-            case 'perubahan_daya':
-                categoryText = 'Perubahan Daya';
-                break;
-            case 'ganti_meter':
-                categoryText = 'GANTI METER';
-                break;
-        }
-        
-        if (subValue) {
-            return `${categoryText} - ${subValue}`;
+        if (kategoriValue && itemValue) {
+            return `${kategoriValue} - ${itemValue}`;
+        } else if (kategoriValue) {
+            return kategoriValue;
         } else {
-            return categoryText;
+            return itemValue;
         }
     }
 
@@ -1831,5 +1789,5 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         }
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'984463e507fc5fe5',t:'MTc1ODczOTAxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98446bc4769a5fe5',t:'MTc1ODczOTMzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
