@@ -817,38 +817,48 @@
               <i class="fas fa-table"></i>
               Tabel Daftar Barang
             </label>
-            <div style="overflow-x: auto; border: 2px solid #e2e8f0; border-radius: 10px;">
-              <table id="barangTable" style="width: 100%; border-collapse: collapse; background: white;">
+            <div style="overflow-x: auto; border: 2px solid #e2e8f0; border-radius: 10px; max-width: 100%;">
+              <table id="barangTable" style="min-width: 800px; width: 100%; border-collapse: collapse; background: white; table-layout: fixed;">
                 <thead>
                   <tr style="background: #f8fafc;">
-                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; width: 50px; vertical-align: middle;">No</th>
-                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; vertical-align: middle;">Nama Barang</th>
-                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; width: 100px; vertical-align: middle;">Satuan</th>
-                    <th colspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; width: 160px;">Jumlah</th>
-                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 12px; text-align: center; font-weight: 600; width: 60px; vertical-align: middle;">Aksi</th>
+                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600; width: 40px; vertical-align: middle; font-size: 0.9rem;">No</th>
+                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600; width: 280px; vertical-align: middle; font-size: 0.9rem;">Nama Barang</th>
+                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600; width: 80px; vertical-align: middle; font-size: 0.9rem;">Satuan</th>
+                    <th colspan="2" style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600; width: 200px; font-size: 0.9rem;">Jumlah</th>
+                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600; width: 50px; vertical-align: middle; font-size: 0.9rem;">Aksi</th>
                   </tr>
                   <tr style="background: #f8fafc;">
-                    <th style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600; width: 80px;">Angka</th>
-                    <th style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600; width: 80px;">Huruf</th>
+                    <th style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; width: 80px; font-size: 0.85rem;">Angka</th>
+                    <th style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; width: 120px; font-size: 0.85rem;">Huruf</th>
                   </tr>
                 </thead>
                 <tbody id="barangTableBody">
                   <tr class="barang-row">
-                    <td style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600;">1</td>
-                    <td style="border: 1px solid #e2e8f0; padding: 8px;">
-                      <input type="text" placeholder="Nama barang..." style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateBarangPreview()">
+                    <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem;">1</td>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px;">
+                      <select onchange="updateSubBarangOptions(this); updateBarangPreview()" style="width: 100%; border: none; padding: 3px; background: transparent; margin-bottom: 3px; font-size: 0.85rem;">
+                        <option value="">Pilih Kategori...</option>
+                        <option value="pasang_baru">Pasang Baru</option>
+                        <option value="perubahan_daya">Perubahan Daya</option>
+                        <option value="ganti_meter">GANTI METER</option>
+                        <option value="custom">Input Manual</option>
+                      </select>
+                      <select class="sub-barang-select" style="width: 100%; border: none; padding: 3px; background: transparent; display: none; font-size: 0.85rem;" onchange="updateBarangPreview()">
+                        <option value="">Pilih Item...</option>
+                      </select>
+                      <input type="text" class="custom-barang-input" placeholder="Ketik nama barang..." style="width: 100%; border: none; padding: 3px; background: transparent; display: none; font-size: 0.85rem;" oninput="updateBarangPreview()">
                     </td>
-                    <td style="border: 1px solid #e2e8f0; padding: 8px;">
-                      <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateBarangPreview()">
+                    <td style="border: 1px solid #e2e8f0; padding: 6px;">
+                      <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
                     </td>
-                    <td style="border: 1px solid #e2e8f0; padding: 8px;">
-                      <input type="number" placeholder="0" style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateTerbilang(this); updateBarangPreview()">
+                    <td style="border: 1px solid #e2e8f0; padding: 6px;">
+                      <input type="number" placeholder="0" style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateTerbilang(this); updateBarangPreview()">
                     </td>
-                    <td style="border: 1px solid #e2e8f0; padding: 8px;">
-                      <input type="text" placeholder="Terbilang..." style="width: 100%; border: none; padding: 4px; background: transparent; font-style: italic;" readonly>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px;">
+                      <input type="text" placeholder="Terbilang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-style: italic; font-size: 0.8rem;" readonly>
                     </td>
-                    <td style="border: 1px solid #e2e8f0; padding: 8px; text-align: center;">
-                      <button type="button" onclick="removeBarangRow(this)" style="padding: 4px 8px; background: #f56565; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                    <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
+                      <button type="button" onclick="removeBarangRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                         <i class="fas fa-trash"></i>
                       </button>
                     </td>
@@ -861,41 +871,6 @@
               Tambah Baris
             </button>
           </div>
-          </div>
-        </div>
-
-        <!-- Keterangan Kendaraan -->
-        <div class="form-group-section collapsible">
-          <h3 onclick="toggleSection('kendaraan')" class="collapsible-header">
-            <i class="fas fa-car"></i> 
-            Keterangan Kendaraan
-            <i class="fas fa-chevron-down toggle-icon" id="kendaraan-icon"></i>
-          </h3>
-          
-          <div class="collapsible-content" id="kendaraan-content">
-            <div class="form-group">
-              <label for="jenisKendaraan">
-                <i class="fas fa-truck"></i>
-                Kendaraan
-              </label>
-              <input type="text" id="jenisKendaraan" placeholder="Contoh: Truk Box, Mobil Pick Up, dll" onchange="updatePreview()">
-            </div>
-
-            <div class="form-group">
-              <label for="platNomor">
-                <i class="fas fa-id-card"></i>
-                Plat Pol
-              </label>
-              <input type="text" id="platNomor" placeholder="Contoh: B 1234 ABC" onchange="updatePreview()">
-            </div>
-
-            <div class="form-group">
-              <label for="namaPengemudi">
-                <i class="fas fa-user-tie"></i>
-                Pengemudi
-              </label>
-              <input type="text" id="namaPengemudi" placeholder="Nama pengemudi" onchange="updatePreview()">
-            </div>
           </div>
         </div>
 
@@ -959,6 +934,41 @@
               <button type="button" onclick="removeSignature('gudang')" style="margin-left: 10px; padding: 3px 8px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 12px;">Hapus</button>
             </div>
           </div>
+          </div>
+        </div>
+
+        <!-- Keterangan Kendaraan -->
+        <div class="form-group-section collapsible">
+          <h3 onclick="toggleSection('kendaraan')" class="collapsible-header">
+            <i class="fas fa-car"></i> 
+            Keterangan Kendaraan
+            <i class="fas fa-chevron-down toggle-icon" id="kendaraan-icon"></i>
+          </h3>
+          
+          <div class="collapsible-content" id="kendaraan-content">
+            <div class="form-group">
+              <label for="jenisKendaraan">
+                <i class="fas fa-truck"></i>
+                Kendaraan
+              </label>
+              <input type="text" id="jenisKendaraan" placeholder="Contoh: Truk Box, Mobil Pick Up, dll" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+              <label for="platNomor">
+                <i class="fas fa-id-card"></i>
+                Plat Pol
+              </label>
+              <input type="text" id="platNomor" placeholder="Contoh: B 1234 ABC" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+              <label for="namaPengemudi">
+                <i class="fas fa-user-tie"></i>
+                Pengemudi
+              </label>
+              <input type="text" id="namaPengemudi" placeholder="Nama pengemudi" onchange="updatePreview()">
+            </div>
           </div>
         </div>
 
@@ -1271,21 +1281,31 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         newRow.className = 'barang-row';
         
         newRow.innerHTML = `
-            <td style="border: 1px solid #e2e8f0; padding: 8px; text-align: center; font-weight: 600;">${rowCount}</td>
-            <td style="border: 1px solid #e2e8f0; padding: 8px;">
-                <input type="text" placeholder="Nama barang..." style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateBarangPreview()">
+            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem;">${rowCount}</td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px;">
+                <select onchange="updateSubBarangOptions(this); updateBarangPreview()" style="width: 100%; border: none; padding: 3px; background: transparent; margin-bottom: 3px; font-size: 0.85rem;">
+                    <option value="">Pilih Kategori...</option>
+                    <option value="pasang_baru">Pasang Baru</option>
+                    <option value="perubahan_daya">Perubahan Daya</option>
+                    <option value="ganti_meter">GANTI METER</option>
+                    <option value="custom">Input Manual</option>
+                </select>
+                <select class="sub-barang-select" style="width: 100%; border: none; padding: 3px; background: transparent; display: none; font-size: 0.85rem;" onchange="updateBarangPreview()">
+                    <option value="">Pilih Item...</option>
+                </select>
+                <input type="text" class="custom-barang-input" placeholder="Ketik nama barang..." style="width: 100%; border: none; padding: 3px; background: transparent; display: none; font-size: 0.85rem;" oninput="updateBarangPreview()">
             </td>
-            <td style="border: 1px solid #e2e8f0; padding: 8px;">
-                <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateBarangPreview()">
+            <td style="border: 1px solid #e2e8f0; padding: 6px;">
+                <input type="text" placeholder="Unit" style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateBarangPreview()">
             </td>
-            <td style="border: 1px solid #e2e8f0; padding: 8px;">
-                <input type="number" placeholder="0" style="width: 100%; border: none; padding: 4px; background: transparent;" oninput="updateTerbilang(this); updateBarangPreview()">
+            <td style="border: 1px solid #e2e8f0; padding: 6px;">
+                <input type="number" placeholder="0" style="width: 100%; border: none; padding: 3px; background: transparent; font-size: 0.85rem;" oninput="updateTerbilang(this); updateBarangPreview()">
             </td>
-            <td style="border: 1px solid #e2e8f0; padding: 8px;">
-                <input type="text" placeholder="Terbilang..." style="width: 100%; border: none; padding: 4px; background: transparent; font-style: italic;" readonly>
+            <td style="border: 1px solid #e2e8f0; padding: 6px;">
+                <input type="text" placeholder="Terbilang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-style: italic; font-size: 0.8rem;" readonly>
             </td>
-            <td style="border: 1px solid #e2e8f0; padding: 8px; text-align: center;">
-                <button type="button" onclick="removeBarangRow(this)" style="padding: 4px 8px; background: #f56565; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
+            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
+                <button type="button" onclick="removeBarangRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
@@ -1371,17 +1391,28 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         let hasItems = false;
         
         barangRows.forEach((row, index) => {
-            const namaBarang = row.querySelector('td:nth-child(2) input').value.trim();
+            const namaBarang = getBarangDisplayText(row);
             const satuan = row.querySelector('td:nth-child(3) input').value.trim();
             const jumlah = row.querySelector('td:nth-child(4) input').value.trim();
             const terbilang = row.querySelector('td:nth-child(5) input').value.trim();
             
             if (namaBarang || satuan || jumlah) {
                 hasItems = true;
+                
+                // Format nama barang dengan styling yang sesuai
+                let formattedNamaBarang = namaBarang || '-';
+                if (namaBarang) {
+                    if (namaBarang.includes('GANTI METER')) {
+                        formattedNamaBarang = `<strong style="text-transform: uppercase;">${namaBarang}</strong>`;
+                    } else if (namaBarang.includes('Pasang Baru') || namaBarang.includes('Perubahan Daya')) {
+                        formattedNamaBarang = `<strong>${namaBarang}</strong>`;
+                    }
+                }
+                
                 tableHTML += `
                     <tr>
                         <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${index + 1}</td>
-                        <td style="border: 1px solid #2d3748; padding: 8px;">${namaBarang || '-'}</td>
+                        <td style="border: 1px solid #2d3748; padding: 8px;">${formattedNamaBarang}</td>
                         <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${satuan || '-'}</td>
                         <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${jumlah || '-'}</td>
                         <td style="border: 1px solid #2d3748; padding: 8px; font-style: italic;">${terbilang || '-'}</td>
@@ -1394,7 +1425,7 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
             tableHTML = `
                 <tr>
                     <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">1</td>
-                    <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">Nama barang akan muncul di sini...</td>
+                    <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">Pilih kategori dan item barang...</td>
                     <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; color: #a0aec0;">-</td>
                     <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; color: #a0aec0;">-</td>
                     <td style="border: 1px solid #2d3748; padding: 8px; color: #a0aec0; font-style: italic;">-</td>
@@ -1682,6 +1713,109 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         prevColorLegend.innerHTML = legendHTML;
     }
 
+    // Data untuk dropdown barang
+    const barangData = {
+        pasang_baru: [
+            'kWh Meter',
+            'MCB 2A',
+            'MCB 4A', 
+            'MCB 6A',
+            'MCB 10A',
+            'Kabel NYM 2x2.5',
+            'Kabel NYM 3x2.5',
+            'Box MCB',
+            'Terminal Block'
+        ],
+        perubahan_daya: [
+            'MBCB 4A',
+            'MBCB 6A',
+            'MBCB 10A',
+            'MBCB 16A',
+            'MBCB 20A',
+            'Kabel NYM 2x4',
+            'Kabel NYM 3x4',
+            'Kabel NYM 2x6',
+            'Terminal Upgrade'
+        ],
+        ganti_meter: [
+            'kWh Meter LPB',
+            'kWh Meter Prabayar',
+            'kWh Meter Digital',
+            'Seal Meter',
+            'Plat Identitas',
+            'Box Meter',
+            'Kunci Meter'
+        ]
+    };
+
+    function updateSubBarangOptions(categorySelect) {
+        const row = categorySelect.closest('tr');
+        const subSelect = row.querySelector('.sub-barang-select');
+        const customInput = row.querySelector('.custom-barang-input');
+        const category = categorySelect.value;
+        
+        // Clear existing options
+        subSelect.innerHTML = '<option value="">Pilih Item...</option>';
+        
+        if (category === 'custom') {
+            // Show custom input, hide dropdown
+            subSelect.style.display = 'none';
+            customInput.style.display = 'block';
+            customInput.focus();
+        } else if (category && barangData[category]) {
+            // Show sub dropdown, hide custom input
+            subSelect.style.display = 'block';
+            customInput.style.display = 'none';
+            
+            // Add options
+            barangData[category].forEach(item => {
+                const option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                subSelect.appendChild(option);
+            });
+        } else {
+            // Hide both
+            subSelect.style.display = 'none';
+            customInput.style.display = 'none';
+        }
+    }
+
+    function getBarangDisplayText(row) {
+        const categorySelect = row.querySelector('select:first-of-type');
+        const subSelect = row.querySelector('.sub-barang-select');
+        const customInput = row.querySelector('.custom-barang-input');
+        
+        const categoryValue = categorySelect.value;
+        const subValue = subSelect.value;
+        const customValue = customInput.value.trim();
+        
+        if (!categoryValue) return '';
+        
+        if (categoryValue === 'custom') {
+            return customValue || '';
+        }
+        
+        let categoryText = '';
+        switch(categoryValue) {
+            case 'pasang_baru':
+                categoryText = 'Pasang Baru';
+                break;
+            case 'perubahan_daya':
+                categoryText = 'Perubahan Daya';
+                break;
+            case 'ganti_meter':
+                categoryText = 'GANTI METER';
+                break;
+        }
+        
+        if (subValue) {
+            return `${categoryText} - ${subValue}`;
+        } else {
+            return categoryText;
+        }
+    }
+
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
         // Ctrl/Cmd + Enter untuk preview
@@ -1697,5 +1831,5 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         }
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98444653c369f9b3',t:'MTc1ODczNzgwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98445bd8b004fe8c',t:'MTc1ODczODY4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
