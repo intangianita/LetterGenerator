@@ -61,7 +61,7 @@
 
     .container {
       display: grid;
-      grid-template-columns: 70% 30%;
+      grid-template-columns: 50% 50%;
       gap: 25px;
       max-width: 1400px;
       margin: 0 auto;
@@ -817,15 +817,15 @@
               <i class="fas fa-table"></i>
               Tabel Daftar Barang
             </label>
-            <div style="overflow-x: auto; border: 2px solid #e2e8f0; border-radius: 10px; max-width: 100%;">
+            <div style="overflow: auto; border: 2px solid #e2e8f0; border-radius: 10px; max-width: 100%; max-height: 400px;">
               <table id="barangTable" style="min-width: 550px; width: 100%; border-collapse: collapse; background: white; table-layout: fixed;">
-                <thead>
+                <thead style="position: sticky; top: 0; background: white; z-index: 10;">
                   <tr style="background: #f8fafc;">
                     <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; width: 35px; vertical-align: middle; font-size: 0.85rem;">No</th>
                     <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; width: 220px; vertical-align: middle; font-size: 0.85rem;">Nama Barang</th>
                     <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; width: 60px; vertical-align: middle; font-size: 0.85rem;">Satuan</th>
                     <th colspan="2" style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; width: 140px; font-size: 0.85rem;">Jumlah</th>
-                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; width: 45px; vertical-align: middle; font-size: 0.85rem;">Aksi</th>
+                    <th rowspan="2" style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; width: 80px; vertical-align: middle; font-size: 0.85rem;">Aksi</th>
                   </tr>
                   <tr style="background: #f8fafc;">
                     <th style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; width: 60px; font-size: 0.8rem;">Angka</th>
@@ -834,30 +834,37 @@
                 </thead>
                 <tbody id="barangTableBody">
                   <tr class="kategori-row">
-                    <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem;">1</td>
-                    <td style="border: 1px solid #e2e8f0; padding: 6px;">
+                    <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem; background: #f8fafc;">-</td>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px; background: #f8fafc;">
                       <input type="text" class="kategori-input" placeholder="Kategori (contoh: Pasang Baru)" style="width: 100%; border: none; padding: 3px; background: transparent; font-weight: 600; font-size: 0.9rem;" oninput="updateKategoriInput(this); updateBarangPreview()">
                     </td>
-                    <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
-                      <button type="button" onclick="addItemToKategori(this)" style="padding: 3px 8px; background: #48bb78; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
-                        <i class="fas fa-plus"></i> Item
-                      </button>
-                    </td>
-                    <td style="border: 1px solid #e2e8f0; padding: 6px;"></td>
-                    <td style="border: 1px solid #e2e8f0; padding: 6px;"></td>
-                    <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
-                      <button type="button" onclick="removeKategoriRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
-                        <i class="fas fa-trash"></i>
-                      </button>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; background: #f8fafc;">-</td>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px; background: #f8fafc;">-</td>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px; background: #f8fafc;">-</td>
+                    <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; background: #f8fafc;">
+                      <div style="display: flex; gap: 3px; justify-content: center;">
+                        <button type="button" onclick="addItemToKategori(this)" style="padding: 3px 6px; background: #48bb78; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;" title="Tambah Item">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                        <button type="button" onclick="removeKategoriRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;" title="Hapus Kategori">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <button type="button" onclick="addKategoriRow()" style="margin-top: 10px; padding: 10px 15px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-              <i class="fas fa-plus"></i>
-              Tambah Kategori
-            </button>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+              <button type="button" onclick="addKategoriRow()" style="padding: 10px 15px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-plus"></i>
+                Tambah Kategori
+              </button>
+              <button type="button" onclick="addItemToLastKategori()" style="padding: 10px 15px; background: #48bb78; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-plus"></i>
+                Tambah Item
+              </button>
+            </div>
           </div>
           </div>
         </div>
@@ -1259,35 +1266,56 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
 
     function addKategoriRow() {
         const tableBody = document.getElementById('barangTableBody');
-        const rowCount = getKategoriCount() + 1;
         
         const newRow = document.createElement('tr');
         newRow.className = 'kategori-row';
         
         newRow.innerHTML = `
-            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem;">${rowCount}</td>
-            <td style="border: 1px solid #e2e8f0; padding: 6px;">
-                <input type="text" class="kategori-input" placeholder="Kategori (contoh: Pasang Baru)" style="width: 100%; border: none; padding: 3px; background: transparent; font-weight: 600; font-size: 0.9rem;" oninput="updateKategoriInput(this); updateBarangPreview()">
+            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; font-weight: 600; font-size: 0.9rem; background: #f8fafc;">-</td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px; background: #f8fafc;">
+                <input type="text" class="kategori-input" placeholder="Kategori (contoh: Ganti Meter)" style="width: 100%; border: none; padding: 3px; background: transparent; font-weight: 600; font-size: 0.9rem;" oninput="updateKategoriInput(this); updateBarangPreview()">
             </td>
-            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
-                <button type="button" onclick="addItemToKategori(this)" style="padding: 3px 8px; background: #48bb78; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
-                    <i class="fas fa-plus"></i> Item
-                </button>
-            </td>
-            <td style="border: 1px solid #e2e8f0; padding: 6px;"></td>
-            <td style="border: 1px solid #e2e8f0; padding: 6px;"></td>
-            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
-                <button type="button" onclick="removeKategoriRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
-                    <i class="fas fa-trash"></i>
-                </button>
+            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; background: #f8fafc;">-</td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px; background: #f8fafc;">-</td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px; background: #f8fafc;">-</td>
+            <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center; background: #f8fafc;">
+                <div style="display: flex; gap: 3px; justify-content: center;">
+                    <button type="button" onclick="addItemToKategori(this)" style="padding: 3px 6px; background: #48bb78; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;" title="Tambah Item">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button type="button" onclick="removeKategoriRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;" title="Hapus Kategori">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             </td>
         `;
         
         tableBody.appendChild(newRow);
         updateBarangPreview();
         
-        // Focus pada input kategori baru
-        newRow.querySelector('.kategori-input').focus();
+        // Focus pada input kategori baru dan scroll ke bawah
+        const newInput = newRow.querySelector('.kategori-input');
+        newInput.focus();
+        newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function addItemToLastKategori() {
+        const kategoriRows = document.querySelectorAll('.kategori-row');
+        if (kategoriRows.length === 0) {
+            showNotification('Tambah kategori terlebih dahulu!', 'error');
+            return;
+        }
+        
+        const lastKategori = kategoriRows[kategoriRows.length - 1];
+        const kategoriInput = lastKategori.querySelector('.kategori-input');
+        
+        if (!kategoriInput.value.trim()) {
+            showNotification('Isi nama kategori terlebih dahulu!', 'error');
+            kategoriInput.focus();
+            return;
+        }
+        
+        addItemToKategori(lastKategori.querySelector('button[onclick*="addItemToKategori"]'));
     }
 
     function addItemToKategori(button) {
@@ -1320,18 +1348,31 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
                 <input type="text" placeholder="Terbilang..." style="width: 100%; border: none; padding: 3px; background: transparent; font-style: italic; font-size: 0.8rem;" readonly>
             </td>
             <td style="border: 1px solid #e2e8f0; padding: 6px; text-align: center;">
-                <button type="button" onclick="removeItemRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                <button type="button" onclick="removeItemRow(this)" style="padding: 3px 6px; background: #f56565; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;" title="Hapus Item">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
         `;
         
-        // Insert setelah kategori row
-        kategoriRow.parentNode.insertBefore(newItemRow, kategoriRow.nextSibling);
+        // Cari posisi untuk insert item (setelah kategori dan item-item lainnya dari kategori yang sama)
+        let insertAfter = kategoriRow;
+        let nextSibling = kategoriRow.nextElementSibling;
+        
+        // Cari item terakhir dari kategori yang sama
+        while (nextSibling && nextSibling.classList.contains('item-row') && 
+               nextSibling.getAttribute('data-kategori') === kategoriValue) {
+            insertAfter = nextSibling;
+            nextSibling = nextSibling.nextElementSibling;
+        }
+        
+        // Insert setelah item terakhir dari kategori yang sama
+        insertAfter.parentNode.insertBefore(newItemRow, insertAfter.nextSibling);
         updateBarangPreview();
         
-        // Focus pada input item baru
-        newItemRow.querySelector('.item-input').focus();
+        // Focus pada input item baru dan scroll ke posisi
+        const newInput = newItemRow.querySelector('.item-input');
+        newInput.focus();
+        newItemRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function removeKategoriRow(button) {
@@ -1421,8 +1462,7 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         
         let tableHTML = '';
         let hasItems = false;
-        let currentKategori = '';
-        let itemNumber = 1;
+        let globalItemNumber = 1; // Penomoran global untuk semua item
         
         // Loop through all rows in table
         const allRows = tableBody.querySelectorAll('tr');
@@ -1434,8 +1474,6 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
                 
                 if (kategoriValue) {
                     hasItems = true;
-                    currentKategori = kategoriValue;
-                    itemNumber = 1; // Reset item number untuk setiap kategori baru
                     
                     // Format kategori dengan styling yang sesuai
                     let formattedKategori = kategoriValue;
@@ -1447,11 +1485,11 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
                     
                     tableHTML += `
                         <tr>
-                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">-</td>
-                            <td style="border: 1px solid #2d3748; padding: 8px;">${formattedKategori}</td>
-                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">-</td>
-                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">-</td>
-                            <td style="border: 1px solid #2d3748; padding: 8px; font-style: italic;">-</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; background: #f8fafc;">-</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; background: #f8fafc;">${formattedKategori}</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; background: #f8fafc;">-</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center; background: #f8fafc;">-</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; font-style: italic; background: #f8fafc;">-</td>
                         </tr>
                     `;
                 }
@@ -1471,14 +1509,14 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
                     
                     tableHTML += `
                         <tr>
-                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${itemNumber}</td>
+                            <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${globalItemNumber}</td>
                             <td style="border: 1px solid #2d3748; padding: 8px; padding-left: 20px;">${itemValue || '-'}</td>
                             <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${satuan || '-'}</td>
                             <td style="border: 1px solid #2d3748; padding: 8px; text-align: center;">${jumlah || '-'}</td>
                             <td style="border: 1px solid #2d3748; padding: 8px; font-style: italic;">${terbilang || '-'}</td>
                         </tr>
                     `;
-                    itemNumber++;
+                    globalItemNumber++;
                 }
             }
         });
@@ -1853,5 +1891,5 @@ Telp: (021) 1234567 | Email: info@perusahaan.com</div>
         }
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'984480ea92eb1e93',t:'MTc1ODc0MDIwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98448e49519bf93e',t:'MTc1ODc0MDc1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
